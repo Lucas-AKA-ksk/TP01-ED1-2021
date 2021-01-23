@@ -1,2 +1,8 @@
 #VScode
 .vscode/*
+
+#.dat
+*.dat
+
+#everything in the build folder
+build/*
