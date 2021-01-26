@@ -11,27 +11,34 @@ void cadastro_cliente(FILE *arq, int *id){
     
     do{
         do{
-            printf("Digite o CPF do cliente a ser cadastrado: ");
+            printf("\nDigite o CPF do cliente a ser cadastrado: ");
+			setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
-            newline_remover(cpf);
-            setbuf(stdin,NULL);
+            check_newline(cpf);
         }while(validarCPF(cpf)==0);
-    
-        if(1/* Função consulta/pesquisa CPF aqui no lugar do "1" */){
+
+        if(pesquisa_clnt_CPF(arq,cpf)==-1){
             strcpy(new.cpf, cpf);
+			printf("valor que será inserido: %s",new.cpf); //TESTING PURPOSES
             printf("\nDigite o nome do cliente: ");
+			setbuf(stdin,NULL);
             fgets(new.nome, sizeof(new.nome),stdin);
-            newline_remover(new.nome);
-            setbuf(stdin,NULL);
+            check_newline(new.nome);
+			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
             printf("\nDigite o email do cliente: ");
+			setbuf(stdin,NULL);
             fgets(new.email, sizeof(new.email),stdin);
-            newline_remover(new.email);
-            setbuf(stdin,NULL);
-            printf("\nDigite o telefone do cliente");
+            check_newline(new.email);
+			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
+            printf("\nDigite o telefone do cliente: ");
+			setbuf(stdin,NULL);
             fgets(new.telefone, sizeof(new.telefone),stdin);
-            newline_remover(new.telefone);
+            check_newline(new.telefone);
+			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
             setbuf(stdin,NULL);
-            new.id = id;
+            new.id = *id;
+			printf("Valor da ID: %lu",new.id);
+			(*id)++;
             fseek(arq,0,SEEK_END);
             fwrite(&new,sizeof(cliente),1,arq);
         }
@@ -40,4 +47,18 @@ void cadastro_cliente(FILE *arq, int *id){
         printf("\nDeseja Cadastrar outro Cliente?\n\n1->Sim\t2->Não");
         scanf("%d",&sair);
     }while(sair!=2);
+}
+
+int pesquisa_clnt_CPF(FILE *arq,char* cpf){
+   	cliente r;
+   	int posicao=0;
+   	fseek(arq,0,SEEK_SET);
+   	
+   	while(fread(&r,sizeof(cliente),1,arq)==1){
+    	if(strcmp(r.cpf,cpf)==0)
+        	return posicao;
+      	else
+         	posicao++;
+   	}
+   	return -1;
 }

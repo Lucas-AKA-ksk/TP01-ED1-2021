@@ -1,9 +1,19 @@
 #include <stdio.h>
+#include <string.h>
 #include "helperFunctions.h"
 
 void newline_remover(char *s){
     if(s[strlen(s)-1]=='\n')
         s[strlen(s)-1]='\0';
+}
+
+void check_newline(char *s){
+    if(strchr(s,'\n')==NULL){
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+    }
+    else
+        newline_remover(s);
 }
 
 int validarCPF(char *cpf)

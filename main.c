@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<locale.h>
-#include "header.h"
+#include "structDeclarations.h"
+#include "fileManipulation.h"
 
 void open_file(FILE**, char*); /* Opens a file with given filename or creates one if none exists */
 
@@ -16,8 +17,9 @@ int main(void){
     open_file(&fp_fornecedor,"record-files/fornecedor.dat");
     open_file(&fp_notaCompra,"record-files/notaCompra.dat");
     open_file(&fp_itemCompra,"record-files/itemCompra.dat");
+
     last_clnt_id = (ftell(fp_cliente)/sizeof(cliente)); /* gets first available ID based on number of entries in file(won't work if delete function is implemented)*/
-    printf("%d", last_clnt_id); // testing purposes, for now...
+
     if (fp_cliente != NULL && fp_notaFiscal != NULL && fp_itemNotaFiscal != NULL && fp_produto != NULL && fp_vendedor != NULL && fp_fornecedor != NULL && fp_notaCompra != NULL && fp_itemCompra != NULL) /* If all files were sucessfully opened */
     {
         do
@@ -47,7 +49,7 @@ int main(void){
                         break;
                 
                     case 1:
-                        /* Função de cadastro de clientes aqui */
+                        cadastro_cliente(fp_cliente, &last_clnt_id);
                         break;
 
                     case 2:

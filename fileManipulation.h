@@ -3,4 +3,6 @@
 
 void cadastro_cliente(FILE*,int*);
 
+int pesquisa_clnt_CPF(FILE*,char*);
+
 #endif //FILE_MANIP_H_INCLUDED
