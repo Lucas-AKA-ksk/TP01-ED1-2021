@@ -3,13 +3,13 @@
 
 void cadastro_cliente(FILE*,int*);
 
-void listar_clnts(FILE*);
+void listar_clientes(FILE*);
 
 int pesquisa_clnt_CPF(FILE*,char*);
 
 void cadastro_vendedor(FILE*,int *);
 
-void listar_vnddrs(FILE*);
+void listar_vendedores(FILE*);
 
 int pesquisa_vnddr_CPF(FILE*,char*);
 

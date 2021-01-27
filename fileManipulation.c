@@ -49,7 +49,7 @@ void cadastro_cliente(FILE *arq, int *id){
     }while(sair!=2);
 }
 
-void listar_clnts(FILE *arq){
+void listar_clientes(FILE *arq){
     cliente r;
     fseek(arq,0,SEEK_SET);
     printf("\nListagem de Clientes");
@@ -122,7 +122,7 @@ void cadastro_vendedor(FILE *arq, int *id){
     }while(sair!=2);
 }
 
-void listar_vnddrs(FILE *arq){
+void listar_vendedores(FILE *arq){
     vendedor r;
     fseek(arq,0,SEEK_SET);
     printf("\nListagem de Vendedores");

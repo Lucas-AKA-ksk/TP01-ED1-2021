@@ -146,15 +146,15 @@ int main(void){
                         break;
                 
                     case 1:
-                        listar_clnts(fp_cliente);
+                        listar_clientes(fp_cliente);
                         break;
 
                     case 2:
-                        listar_vnddrs(fp_vendedor);
+                        listar_vendedores(fp_vendedor);
                         break;
 
                     case 3:
-                        /* função de LISTAGEM de fornecedores aqui */
+                        listar_fornecedores(fp_fornecedor);
                         break;
 
                     default:
