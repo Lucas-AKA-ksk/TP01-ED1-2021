@@ -34,7 +34,7 @@ typedef struct
     unsigned long id;
     char nome[100];
     unsigned int quantidadeEstoque;
-    float valorVenda;
+    float precoUnitario;
 }produto;
 
 typedef struct
@@ -45,6 +45,7 @@ typedef struct
     char cpf[12];
     char email[50];
     char telefone[15];
+    char password[20];
 }vendedor;
 
 typedef struct

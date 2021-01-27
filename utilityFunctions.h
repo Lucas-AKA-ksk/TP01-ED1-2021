@@ -2,7 +2,11 @@
 #define HELPER_H_INCLUDED
 
 void newline_remover(char *);
-int validarCPF(char *);
+
 void check_newline(char *);
+
+int validarCPF(char *);
+
+int validarCNPJ(char*);
 
 #endif

@@ -1,7 +1,9 @@
-#include<stdio.h>
-#include<locale.h>
+#include <stdio.h>
+#include <locale.h>
 #include "structDeclarations.h"
-#include "fileManipulation.h"
+#include "clienteFileManip.h"
+#include "vendedorFileManip.h"
+#include "fornecedorFileManip.h"
 
 void open_file(FILE**, char*); /* Opens a file with given filename or creates one if none exists */
 
@@ -19,9 +21,9 @@ int main(void){
     open_file(&fp_itemCompra,"record-files/itemCompra.dat");
 
     /* Gets first available ID based on number of entries in file(won't work if delete function is implemented) */
-    last_clnt_id = (ftell(fp_cliente)/sizeof(cliente)); 
-    last_vnddr_id = (ftell(fp_vendedor)/sizeof(vendedor));
-    last_frncdr_id = (ftell(fp_fornecedor)/sizeof(fornecedor));
+    last_clnt_id = (ftell(fp_cliente)/sizeof(cliente))+1; 
+    last_vnddr_id = (ftell(fp_vendedor)/sizeof(vendedor))+1;
+    last_frncdr_id = (ftell(fp_fornecedor)/sizeof(fornecedor)+1);
 
     if (fp_cliente != NULL && fp_notaFiscal != NULL && fp_itemNotaFiscal != NULL && fp_produto != NULL && fp_vendedor != NULL && fp_fornecedor != NULL && fp_notaCompra != NULL && fp_itemCompra != NULL) /* If all files were sucessfully opened */
     {
@@ -61,7 +63,7 @@ int main(void){
                         break;
 
                     case 3:
-                        cadastro_fornecedor(fp_vendedor, &last_frncdr_id);
+                        cadastro_fornecedor(fp_fornecedor, &last_frncdr_id);
                         break;
 
                     default:
