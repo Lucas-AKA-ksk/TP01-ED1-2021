@@ -50,7 +50,7 @@ typedef struct
 typedef struct
 {
     unsigned long id;
-    char CNPJ[15];
+    char cnpj[15];
     char nome[100];
     char email[50];
     char telefone[15];

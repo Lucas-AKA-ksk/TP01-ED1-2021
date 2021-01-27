@@ -7,7 +7,7 @@ void open_file(FILE**, char*); /* Opens a file with given filename or creates on
 
 int main(void){
     setlocale(LC_ALL,"");
-    int option, subOption, last_clnt_id;
+    int option, subOption, last_clnt_id, last_vnddr_id, last_frncdr_id;
     FILE *fp_cliente,*fp_notaFiscal,*fp_itemNotaFiscal,*fp_produto,*fp_vendedor,*fp_fornecedor,*fp_notaCompra,*fp_itemCompra;
     open_file(&fp_cliente,"record-files/cliente.dat");
     open_file(&fp_notaFiscal,"record-files/notaFiscal.dat");
@@ -18,7 +18,10 @@ int main(void){
     open_file(&fp_notaCompra,"record-files/notaCompra.dat");
     open_file(&fp_itemCompra,"record-files/itemCompra.dat");
 
-    last_clnt_id = (ftell(fp_cliente)/sizeof(cliente)); /* gets first available ID based on number of entries in file(won't work if delete function is implemented)*/
+    /* Gets first available ID based on number of entries in file(won't work if delete function is implemented) */
+    last_clnt_id = (ftell(fp_cliente)/sizeof(cliente)); 
+    last_vnddr_id = (ftell(fp_vendedor)/sizeof(vendedor));
+    last_frncdr_id = (ftell(fp_fornecedor)/sizeof(fornecedor));
 
     if (fp_cliente != NULL && fp_notaFiscal != NULL && fp_itemNotaFiscal != NULL && fp_produto != NULL && fp_vendedor != NULL && fp_fornecedor != NULL && fp_notaCompra != NULL && fp_itemCompra != NULL) /* If all files were sucessfully opened */
     {
@@ -36,6 +39,7 @@ int main(void){
             case 0:
                 /* code, if any...*/
                 break;
+            
             case 1: /*Sub-menu de cadastros */
                 do
                 {
@@ -53,11 +57,11 @@ int main(void){
                         break;
 
                     case 2:
-                        /* função de cadastro de vendedores aqui */
+                        cadastro_vendedor(fp_vendedor, &last_vnddr_id);
                         break;
 
                     case 3:
-                        /* função de cadastro de fornecedores aqui */
+                        cadastro_fornecedor(fp_vendedor, &last_frncdr_id);
                         break;
 
                     default:
@@ -142,15 +146,15 @@ int main(void){
                         break;
                 
                     case 1:
-                        /* Função de CONSULTA de clientes aqui */
+                        listar_clnts(fp_cliente);
                         break;
 
                     case 2:
-                        /* função de CONSULTA de vendedores aqui */
+                        listar_vnddrs(fp_vendedor);
                         break;
 
                     case 3:
-                        /* função de CONSULTA de fornecedores aqui */
+                        /* função de LISTAGEM de fornecedores aqui */
                         break;
 
                     default:
