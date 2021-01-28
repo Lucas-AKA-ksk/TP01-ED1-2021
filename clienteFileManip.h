@@ -7,4 +7,6 @@ void listar_clientes(FILE*);
 
 int pesquisa_clnt_CPF(FILE*,char*);
 
-#endif
+void alteracao_cliente(FILE*);
+
+#endif //CLNT_FILE_MANIP_H_INCLUDED

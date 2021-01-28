@@ -72,3 +72,51 @@ int pesquisa_frncdr_CNPJ(FILE *arq,char* cnpj){
    	return -1;
 }
 
+void alteracao_fornecedor(FILE *arq){
+    char cnpj[15];
+    int sair = 1, posicao;
+    fornecedor new;
+    
+    do{
+        do{
+            printf("\nDigite o CNPJ do fornecedor o qual o cadastro deverá ser alterado: ");
+			setbuf(stdin,NULL);
+            fgets(cnpj,sizeof(cnpj),stdin);
+            check_newline(cnpj);
+        }while(validarCNPJ(cnpj)==0);
+
+        posicao = pesquisa_frncdr_CNPJ(arq,cnpj);
+        
+        if(posicao!=-1){
+            fseek(arq,posicao*sizeof(fornecedor),SEEK_SET);
+            fread(&new,sizeof(fornecedor),1,arq);
+            strcpy(new.cnpj, cnpj);
+			printf("valor que será inserido: %s",new.cnpj); //TESTING PURPOSES
+            printf("\nDigite o nome do fornecedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.nome, sizeof(new.nome),stdin);
+            check_newline(new.nome);
+			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
+            printf("\nDigite o email do fornecedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.email, sizeof(new.email),stdin);
+            check_newline(new.email);
+			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
+            printf("\nDigite o telefone do fornecedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.telefone, sizeof(new.telefone),stdin);
+            check_newline(new.telefone);
+			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
+            setbuf(stdin,NULL);
+			printf("\nValor da ID: %lu",new.id);
+            fseek(arq,posicao*sizeof(fornecedor),SEEK_SET);
+            fwrite(&new,sizeof(fornecedor),1,arq);
+        }
+        else
+            printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
+
+        printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    }while(sair !=1);
+}
+

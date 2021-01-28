@@ -7,4 +7,6 @@ void listar_vendedores(FILE*);
 
 int pesquisa_vnddr_CPF(FILE*,char*);
 
-#endif
+void alteracao_vendedor(FILE*);
+
+#endif //VNDDR_FILE_MANIP_H_INCLUDED

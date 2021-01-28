@@ -4,8 +4,7 @@
 #include "clienteFileManip.h"
 #include "vendedorFileManip.h"
 #include "fornecedorFileManip.h"
-
-void open_file(FILE**, char*); /* Opens a file with given filename or creates one if none exists */
+#include "utilityFunctions.h"
 
 int main(void){
     setlocale(LC_ALL,"");
@@ -45,7 +44,7 @@ int main(void){
             case 1: /*Sub-menu de cadastros */
                 do
                 {
-                    printf("\n\tSelecione qual tipo de cadastro deseja REALIZAR:");
+                    printf("\n\n\tSelecione qual tipo de cadastro deseja REALIZAR:");
                     printf("\n\t1->Cadastro de Clientes\t2->Cadastro de Vendedores\n\t3->Cadastro de Fornecedores\t0->Voltar ao Menu Principal");
                     printf("\n\nOpção selecionada: ");
                     scanf("%d", &subOption);
@@ -76,7 +75,7 @@ int main(void){
             case 2: /* Sub-menu de ALTERAÇÃO de cadastros */
                 do
                 {
-                    printf("\n\tSelecione qual tipo de cadastro deseja ALTERAR:");
+                    printf("\n\n\tSelecione qual tipo de cadastro deseja ALTERAR:");
                     printf("\n\t1->Cadastro de Clientes\t2->Cadastro de Vendedores\n\t3->Cadastro de Fornecedores\t0->Voltar ao Menu Principal");
                     printf("\n\nOpção selecionada: ");
                     scanf("%d", &subOption);
@@ -86,15 +85,15 @@ int main(void){
                         break;
                 
                     case 1:
-                        /* Função de ALTERAÇÃO de cadastro de clientes aqui */
+                        alteracao_cliente(fp_cliente);
                         break;
 
                     case 2:
-                        /* função de ALTERAÇÃO de cadastro de vendedores aqui */
+                        alteracao_vendedor(fp_vendedor);
                         break;
 
                     case 3:
-                        /* função de ALTERAÇÃO de cadastro de fornecedores aqui */
+                        alteracao_fornecedor(fp_vendedor);
                         break;
 
                     default:
@@ -107,7 +106,7 @@ int main(void){
             case 3: /* Sub-menu de Consultas */
                 do
                 {
-                    printf("\n\tSelecione qual tipo de cadastro deseja CONSULTAR:");
+                    printf("\n\n\tSelecione qual tipo de cadastro deseja CONSULTAR:");
                     printf("\n\t1->Consulta de Clientes\t2->Consulta de Vendedores\n\t3->Consulta de Fornecedores\t0->Voltar ao Menu Principal");
                     printf("\n\nOpção selecionada: ");
                     scanf("%d", &subOption);
@@ -138,7 +137,7 @@ int main(void){
             case 4: /* Sub-menu de Listagens */
                 do
                 {
-                    printf("\n\tSelecione qual tipo de cadastro deseja LISTAR:");
+                    printf("\n\n\tSelecione qual tipo de cadastro deseja LISTAR:");
                     printf("\n\t1->Listagem de Clientes\t2->Listagem de Vendedores\n\t3->Listagem de Fornecedores\t0->Voltar ao Menu Principal");
                     printf("\n\nOpção selecionada: ");
                     scanf("%d", &subOption);
@@ -182,12 +181,3 @@ int main(void){
     fclose(fp_itemCompra);
     return 0;
 }
-
-void open_file(FILE** fp,char* filename)
-{
-    *fp = fopen(filename,"r+b");
-    if(*fp == NULL){
-        printf("\nArquivo %s não encontrado, um novo arquivo de mesmo nome será criado.", filename);
-        *fp = fopen(filename, "w+b");
-    }
-};

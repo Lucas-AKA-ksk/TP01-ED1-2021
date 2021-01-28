@@ -83,3 +83,62 @@ int pesquisa_vnddr_CPF(FILE *arq,char* cpf){
    	return -1;
 }
 
+void alteracao_vendedor(FILE *arq){
+    char cpf[12];
+    int sair = 1, posicao;
+    vendedor new;
+    
+    do{
+        do{
+            printf("\nDigite o CPF do vendedor o qual o cadastro deverá ser alterado: ");
+			setbuf(stdin,NULL);
+            fgets(cpf,sizeof(cpf),stdin);
+            check_newline(cpf);
+        }while(validarCPF(cpf)==0);
+
+        posicao = pesquisa_vnddr_CPF(arq,cpf);
+        
+        if(posicao!=-1){
+            fseek(arq,posicao*sizeof(vendedor),SEEK_SET);
+            fread(&new,sizeof(vendedor),1,arq);
+            strcpy(new.cpf, cpf);
+			printf("valor que será inserido: %s",new.cpf); //TESTING PURPOSES
+            printf("\nDigite a matricula do vendedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.matricula, sizeof(new.matricula),stdin);
+            check_newline(new.matricula);
+            printf("valor que será inserido: %s",new.matricula); //TESTING PURPOSES
+            printf("\nDigite o nome do vendedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.nome, sizeof(new.nome),stdin);
+            check_newline(new.nome);
+			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
+            printf("\nDigite o email do vendedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.email, sizeof(new.email),stdin);
+            check_newline(new.email);
+			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
+            printf("\nDigite o telefone do vendedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.telefone, sizeof(new.telefone),stdin);
+            check_newline(new.telefone);
+			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
+            setbuf(stdin,NULL);
+            printf("\nDigite a senha do vendedor: ");
+			setbuf(stdin,NULL);
+            fgets(new.password, sizeof(new.password),stdin);
+            check_newline(new.password);
+            printf("valor que será inserido: %s",new.password); //TESTING PURPOSES
+            setbuf(stdin,NULL);
+			printf("\nValor da ID: %lu",new.id);
+            fseek(arq,posicao*sizeof(vendedor),SEEK_SET);
+            fwrite(&new,sizeof(vendedor),1,arq);
+        }
+        else
+            printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
+
+        printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    }while(sair !=1);
+}
+

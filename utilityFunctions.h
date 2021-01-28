@@ -1,12 +1,14 @@
-#ifndef HELPER_H_INCLUDED
-#define HELPER_H_INCLUDED
+#ifndef UTILITY_H_INCLUDED
+#define UTILITY_H_INCLUDED
 
-void newline_remover(char *);
+void open_file(FILE**, char*); /* Opens a file with given filename or creates one if none exists */
 
-void check_newline(char *);
+void newline_remover(char*);
 
-int validarCPF(char *);
+void check_newline(char*);
+
+int validarCPF(char*);
 
 int validarCNPJ(char*);
 
-#endif
+#endif //UTILITY_H_INCLUDED

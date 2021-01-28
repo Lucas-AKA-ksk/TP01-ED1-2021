@@ -7,4 +7,6 @@ void listar_fornecedores(FILE*);
 
 int pesquisa_frncdr_CNPJ(FILE*,char*);
 
-#endif
+void alteracao_fornecedor(FILE*);
+
+#endif //FRNCDR_FILE_MANIP_H_INCLUDED

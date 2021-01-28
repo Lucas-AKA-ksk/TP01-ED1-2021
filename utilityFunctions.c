@@ -2,6 +2,15 @@
 #include <string.h>
 #include "utilityFunctions.h"
 
+void open_file(FILE** fp,char* filename)
+{
+    *fp = fopen(filename,"r+b");
+    if(*fp == NULL){
+        printf("\nArquivo %s não encontrado, um novo arquivo de mesmo nome será criado.", filename);
+        *fp = fopen(filename, "w+b");
+    }
+};
+
 void newline_remover(char *s){
     if(s[strlen(s)-1]=='\n')
         s[strlen(s)-1]='\0';
