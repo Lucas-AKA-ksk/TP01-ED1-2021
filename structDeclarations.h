@@ -8,7 +8,7 @@ typedef struct
     char cpf[12];
     char email[50];
     char telefone[15];
-}cliente;
+}Cliente;
 
 typedef struct
 {
@@ -18,7 +18,7 @@ typedef struct
     unsigned long idVendedor;
     char dataCompra[11];
     float valorTotal;
-}notaFiscal;
+}NotaFiscal;
 
 typedef struct
 {
@@ -27,7 +27,7 @@ typedef struct
     unsigned long idProduto;
     float precoUnitario;
     unsigned int quantidade;
-}itemNotaFiscal;
+}ItemNotaFiscal;
 
 typedef struct
 {
@@ -35,7 +35,7 @@ typedef struct
     char nome[100];
     unsigned int quantidadeEstoque;
     float precoUnitario;
-}produto;
+}Produto;
 
 typedef struct
 {
@@ -46,7 +46,7 @@ typedef struct
     char email[50];
     char telefone[15];
     char password[20];
-}vendedor;
+}Vendedor;
 
 typedef struct
 {
@@ -55,7 +55,7 @@ typedef struct
     char nome[100];
     char email[50];
     char telefone[15];
-}fornecedor;
+}Fornecedor;
 
 typedef struct
 {
@@ -64,7 +64,7 @@ typedef struct
     unsigned long idFornecedor;
     char dataCompra[11];
     float valorTotal;
-}notaCompra;
+}NotaCompra;
 
 typedef struct
 {
@@ -73,6 +73,6 @@ typedef struct
     unsigned long idNotacompra;
     unsigned int quantidade;
     float valorUnitario;
-}itemCompra;
+}ItemNotaCompra;
 
 #endif // STRUCT_H_INCLUDED

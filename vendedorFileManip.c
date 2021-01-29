@@ -7,7 +7,7 @@
 void cadastro_vendedor(FILE *arq, int *id){
     char cpf[12];
     int sair = 1;
-    vendedor new;
+    Vendedor new;
     
     do{
         do{
@@ -51,7 +51,7 @@ void cadastro_vendedor(FILE *arq, int *id){
 			printf("\nValor da ID: %lu",new.id);
 			(*id)++;
             fseek(arq,0,SEEK_END);
-            fwrite(&new,sizeof(vendedor),1,arq);
+            fwrite(&new,sizeof(Vendedor),1,arq);
         }
         else
             printf("\nCPF já cadastrado!! Operação cancelada!!");
@@ -61,20 +61,20 @@ void cadastro_vendedor(FILE *arq, int *id){
 }
 
 void listar_vendedores(FILE *arq){
-    vendedor r;
+    Vendedor r;
     fseek(arq,0,SEEK_SET);
     printf("\nListagem de Vendedores");
     printf("\nID\t\tMATRICULA\t\tNOME\t\t\t\tCPF\t\tEMAIL\t\t\tTELEFONE");
-    while(fread(&r,sizeof(vendedor),1,arq))
+    while(fread(&r,sizeof(Vendedor),1,arq))
         printf("\n%lu\t\t%s\t\t%s\t\t\t\t%s\t\t%s\t\t\t%s",r.id,r.matricula,r.nome,r.cpf,r.email,r.telefone);
 }
 
 int pesquisa_vnddr_CPF(FILE *arq,char* cpf){
-   	vendedor r;
+   	Vendedor r;
    	int posicao=0;
    	fseek(arq,0,SEEK_SET);
    	
-   	while(fread(&r,sizeof(vendedor),1,arq)==1){
+   	while(fread(&r,sizeof(Vendedor),1,arq)==1){
     	if(strcmp(r.cpf,cpf)==0)
         	return posicao;
       	else
@@ -86,7 +86,7 @@ int pesquisa_vnddr_CPF(FILE *arq,char* cpf){
 void alteracao_vendedor(FILE *arq){
     char cpf[12];
     int sair = 1, posicao;
-    vendedor new;
+    Vendedor new;
     
     do{
         do{
@@ -99,8 +99,8 @@ void alteracao_vendedor(FILE *arq){
         posicao = pesquisa_vnddr_CPF(arq,cpf);
         
         if(posicao!=-1){
-            fseek(arq,posicao*sizeof(vendedor),SEEK_SET);
-            fread(&new,sizeof(vendedor),1,arq);
+            fseek(arq,posicao*sizeof(Vendedor),SEEK_SET);
+            fread(&new,sizeof(Vendedor),1,arq);
             strcpy(new.cpf, cpf);
 			printf("valor que será inserido: %s",new.cpf); //TESTING PURPOSES
             printf("\nDigite a matricula do vendedor: ");
@@ -131,8 +131,8 @@ void alteracao_vendedor(FILE *arq){
             printf("valor que será inserido: %s",new.password); //TESTING PURPOSES
             setbuf(stdin,NULL);
 			printf("\nValor da ID: %lu",new.id);
-            fseek(arq,posicao*sizeof(vendedor),SEEK_SET);
-            fwrite(&new,sizeof(vendedor),1,arq);
+            fseek(arq,posicao*sizeof(Vendedor),SEEK_SET);
+            fwrite(&new,sizeof(Vendedor),1,arq);
         }
         else
             printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
@@ -142,3 +142,39 @@ void alteracao_vendedor(FILE *arq){
     }while(sair !=1);
 }
 
+void consulta_vnddr_CPF(FILE *arq){
+    char cpf[12];
+    int sair = 1, posicao;
+    Vendedor search;
+    
+    do{
+        do{
+            printf("\nDigite o CPF do vendedor o qual o deseja CONSULTAR: ");
+			setbuf(stdin,NULL);
+            fgets(cpf,sizeof(cpf),stdin);
+            check_newline(cpf);
+        }while(validarCPF(cpf)==0);
+
+        posicao = pesquisa_vnddr_CPF(arq,cpf);
+        
+        if(posicao!=-1){
+            printf("\nRegistro encontrado!!");
+
+            fseek(arq,posicao*sizeof(Vendedor),SEEK_SET);
+            fread(&search,sizeof(Vendedor),1,arq);
+            
+			printf("\nCPF do Vendedor: %s",search.cpf); 
+            printf("\nMatricula do Vendedor: %s",search.matricula); 
+			printf("\nNome do Vendedor: %s",search.nome); 
+			printf("\nEMAIL do Vendedor: %s",search.email); 
+			printf("\nTelefone do Vendedor: %s",search.telefone); 
+            printf("\nSenha do Vendedor: %s",search.password); 
+			printf("\nID do Vendedor: %lu",search.id);
+        }
+        else
+            printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
+
+        printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    }while(sair !=1);
+}

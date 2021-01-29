@@ -94,7 +94,6 @@ int validarCNPJ(char *cnpj)
     {
         for(i = 11, j = 2; i>=0 ;i--, j++)
         {
-            printf("valores do loop: %d e %d",i,j);
             if(j>9)
                 j=2;
             digito1 += (cnpj[i]-48) * j;
