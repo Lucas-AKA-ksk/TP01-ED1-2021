@@ -83,6 +83,20 @@ int pesquisa_vnddr_CPF(FILE *arq,char* cpf){
    	return -1;
 }
 
+int pesquisa_vnddr_ID(FILE *arq,unsigned long id){
+   	Vendedor r;
+   	int posicao=0;
+   	fseek(arq,0,SEEK_SET);
+   	
+   	while(fread(&r,sizeof(Vendedor),1,arq)==1){
+    	if(r.id == id)
+        	return posicao;
+      	else
+         	posicao++;
+   	}
+   	return -1;
+}
+
 void alteracao_vendedor(FILE *arq){
     char cpf[12];
     int sair = 1, posicao;
@@ -149,7 +163,7 @@ void consulta_vnddr_CPF(FILE *arq){
     
     do{
         do{
-            printf("\nDigite o CPF do vendedor o qual o deseja CONSULTAR: ");
+            printf("\nDigite o CPF do Vendedor o qual o deseja CONSULTAR: ");
 			setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
             check_newline(cpf);
@@ -173,6 +187,39 @@ void consulta_vnddr_CPF(FILE *arq){
         }
         else
             printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
+
+        printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    }while(sair !=1);
+}
+
+void consulta_vnddr_ID(FILE *arq){
+    unsigned long id;
+    int sair = 1, posicao;
+    Vendedor search;
+    do{
+        printf("\nDigite a ID do Vendedor o qual deseja CONSULTAR: ");
+		setbuf(stdin,NULL);
+        scanf("%lu",&id);
+
+        posicao = pesquisa_vnddr_ID(arq,id);
+        
+        if(posicao!=-1){
+            printf("\nRegistro encontrado!!");
+            
+            fseek(arq,posicao*sizeof(Vendedor),SEEK_SET);
+            fread(&search,sizeof(Vendedor),1,arq);
+            
+			printf("\nCPF do Vendedor: %s",search.cpf); 
+            printf("\nMatricula do Vendedor: %s",search.matricula); 
+			printf("\nNome do Vendedor: %s",search.nome); 
+			printf("\nEMAIL do Vendedor: %s",search.email); 
+			printf("\nTelefone do Vendedor: %s",search.telefone); 
+            printf("\nSenha do Vendedor: %s",search.password); 
+			printf("\nID do Vendedor: %lu",search.id);
+        }
+        else
+            printf("\nID não Cadastrado no Registro, operação cancelada!!!");
 
         printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);

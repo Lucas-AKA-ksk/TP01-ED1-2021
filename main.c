@@ -132,7 +132,7 @@ int main(void){
                                 break;
 
                             case 2:
-                                /* Função de CONSULTA de clientes por ID aqui */
+                                consulta_clnt_ID(fp_cliente);/* Função de CONSULTA de clientes por ID aqui */
                                 break;
 
                             case 3:
@@ -163,7 +163,7 @@ int main(void){
                                 break;
 
                             case 2:
-                                /* Função de CONSULTA de vendedores por ID aqui */
+                                consulta_vnddr_ID(fp_vendedor);/* Função de CONSULTA de vendedores por ID aqui */
                                 break;
 
                             case 3:
@@ -194,7 +194,7 @@ int main(void){
                                 break;
 
                             case 2:
-                                /* Função de CONSULTA de vendedores por ID aqui */
+                                consulta_frncdr_ID(fp_fornecedor);/* Função de CONSULTA de vendedores por ID aqui */
                                 break;
 
                             case 3:

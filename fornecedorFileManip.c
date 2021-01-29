@@ -72,6 +72,20 @@ int pesquisa_frncdr_CNPJ(FILE *arq,char* cnpj){
    	return -1;
 }
 
+int pesquisa_frncdr_ID(FILE *arq,unsigned long id){
+   	Fornecedor r;
+   	int posicao=0;
+   	fseek(arq,0,SEEK_SET);
+   	
+   	while(fread(&r,sizeof(Fornecedor),1,arq)==1){
+    	if(r.id == id)
+        	return posicao;
+      	else
+         	posicao++;
+   	}
+   	return -1;
+}
+
 void alteracao_fornecedor(FILE *arq){
     char cnpj[15];
     int sair = 1, posicao;
@@ -113,7 +127,7 @@ void alteracao_fornecedor(FILE *arq){
             fwrite(&new,sizeof(Fornecedor),1,arq);
         }
         else
-            printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
+            printf("\nCNPJ não Cadastrado no Registro, operação cancelada!!!");
 
         printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
         scanf("%d",&sair);
@@ -123,11 +137,11 @@ void alteracao_fornecedor(FILE *arq){
 void consulta_frncdr_CPF(FILE *arq){
     char cnpj[15];
     int sair = 1, posicao;
-    Fornecedor new;
+    Fornecedor search;
     
     do{
         do{
-            printf("\nDigite o CNPJ do fornecedor o qual deseja CONSULTAR: ");
+            printf("\nDigite o CNPJ do Fornecedor o qual deseja CONSULTAR: ");
 			setbuf(stdin,NULL);
             fgets(cnpj,sizeof(cnpj),stdin);
             check_newline(cnpj);
@@ -136,18 +150,52 @@ void consulta_frncdr_CPF(FILE *arq){
         posicao = pesquisa_frncdr_CNPJ(arq,cnpj);
         
         if(posicao!=-1){
+            printf("\nRegistro encontrado!!");
+
             fseek(arq,posicao*sizeof(Fornecedor),SEEK_SET);
-            fread(&new,sizeof(Fornecedor),1,arq);
-			printf("\nCNPJ do Fornecedor: %s",new.cnpj); 
-			printf("\nNome do Fornecedor: %s",new.nome); 
-			printf("\nEMAIL do Fornecedor: %s",new.email); 
-			printf("\nTelefone do Fornecedor: %s",new.telefone); 
-			printf("\nID do Fornecedor: %lu",new.id);
+            fread(&search,sizeof(Fornecedor),1,arq);
+			
+            printf("\nCNPJ do Fornecedor: %s",search.cnpj); 
+			printf("\nNome do Fornecedor: %s",search.nome); 
+			printf("\nEMAIL do Fornecedor: %s",search.email); 
+			printf("\nTelefone do Fornecedor: %s",search.telefone); 
+			printf("\nID do Fornecedor: %lu",search.id);
         }
         else
-            printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
+            printf("\nCNPJ não Cadastrado no Registro, operação cancelada!!!");
 
         printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    }while(sair !=1);
+}
+
+void consulta_frncdr_ID(FILE *arq){
+    unsigned long id;
+    int sair = 1, posicao;
+    Fornecedor search;
+    do{
+        printf("\nDigite a ID do Fornecedor o qual deseja CONSULTAR: ");
+		setbuf(stdin,NULL);
+        scanf("%lu",&id);
+
+        posicao = pesquisa_frncdr_ID(arq,id);
+        
+        if(posicao!=-1){
+            printf("\nRegistro encontrado!!");
+
+            fseek(arq,posicao*sizeof(Fornecedor),SEEK_SET);
+            fread(&search,sizeof(Fornecedor),1,arq);
+			
+            printf("\nCNPJ do Fornecedor: %s",search.cnpj);
+			printf("\nNome do Fornecedor: %s",search.nome);
+			printf("\nEMAIL do Fornecedor: %s",search.email);
+			printf("\nTelefone do Fornecedor: %s",search.telefone);
+			printf("\nID do Fornecedor: %lu",search.id);
+        }
+        else
+            printf("\nID não Cadastrado no Registro, operação cancelada!!!");
+
+        printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
     }while(sair !=1);
 }

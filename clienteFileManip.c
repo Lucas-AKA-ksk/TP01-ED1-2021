@@ -72,6 +72,20 @@ int pesquisa_clnt_CPF(FILE *arq,char* cpf){
    	return -1;
 }
 
+int pesquisa_clnt_ID(FILE *arq,unsigned long id){
+   	Cliente r;
+   	int posicao=0;
+   	fseek(arq,0,SEEK_SET);
+   	
+   	while(fread(&r,sizeof(Cliente),1,arq)==1){
+    	if(r.id == id)
+        	return posicao;
+      	else
+         	posicao++;
+   	}
+   	return -1;
+}
+
 void alteracao_cliente(FILE *arq){
     char cpf[12];
     int sair = 1, posicao;
@@ -148,6 +162,37 @@ void consulta_clnt_CPF(FILE *arq){
         }
         else
             printf("\nCPF não Cadastrado no Registro, operação cancelada!!!");
+
+        printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    }while(sair !=1);
+}
+
+void consulta_clnt_ID(FILE *arq){
+    unsigned long id;
+    int sair = 1, posicao;
+    Cliente search;
+    do{
+        printf("\nDigite a ID do Cliente o qual deseja CONSULTAR: ");
+		setbuf(stdin,NULL);
+        scanf("%lu",&id);
+
+        posicao = pesquisa_clnt_ID(arq,id);
+        
+        if(posicao!=-1){
+            printf("\nRegistro encontrado!!");
+            
+            fseek(arq,posicao*sizeof(Cliente),SEEK_SET);
+            fread(&search,sizeof(Cliente),1,arq);
+			
+            printf("\nCPF do Cliente: %s",search.cpf); 
+			printf("\nNome do Cliente: %s",search.nome); 
+			printf("\nEMAIL do Cliente: %s",search.email); 
+			printf("\nTelefone do cliente: %s",search.telefone); 
+			printf("\nID do Cliente: %lu",search.id);
+        }
+        else
+            printf("\nID não Cadastrado no Registro, operação cancelada!!!");
 
         printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
