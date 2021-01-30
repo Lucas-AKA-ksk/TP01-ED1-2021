@@ -15,4 +15,6 @@ void consulta_vnddr_CPF(FILE*);
 
 void consulta_vnddr_ID(FILE*);
 
+void consulta_vnddr_INI(FILE*);
+
 #endif //VNDDR_FILE_MANIP_H_INCLUDED

@@ -19,7 +19,8 @@ int main(void){
     open_file(&fp_notaCompra,"record-files/notaCompra.dat");
     open_file(&fp_itemCompra,"record-files/itemCompra.dat");
 
-    /* Gets first available ID based on number of entries in file(won't work if delete function is implemented) */
+    /* Gets first available ID based on number of entries in the file
+    (won't work if delete function is implemented) */
     last_clnt_id = (ftell(fp_cliente)/sizeof(Cliente))+1; 
     last_vnddr_id = (ftell(fp_vendedor)/sizeof(Vendedor))+1;
     last_frncdr_id = (ftell(fp_fornecedor)/sizeof(Fornecedor)+1);
@@ -167,7 +168,7 @@ int main(void){
                                 break;
 
                             case 3:
-                                /* Função de CONSULTA de vendedores por INICIAIS aqui */
+                                consulta_vnddr_INI(fp_vendedor);/* Função de CONSULTA de vendedores por INICIAIS aqui */
                                 break;
 
                             default:
