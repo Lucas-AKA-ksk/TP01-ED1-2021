@@ -119,7 +119,7 @@ int main(void){
                         do
                         {
                             printf("\n\n\tSelecione por qual campo deseja CONSULTAR:");
-                            printf("\n\t1->Consulta por CPF\t2->Consulta por ID\n\t3->Consulta INICIAIS\t0->Voltar ao Menu de Consultas");
+                            printf("\n\t1->Consulta por CPF\t2->Consulta por ID\n\t3->Consulta por INICIAIS\t0->Voltar ao Menu de Consultas");
                             printf("\n\nOpção selecionada: ");
                             scanf("%d", &subOption2);
                             switch (subOption2)
@@ -136,7 +136,7 @@ int main(void){
                                 break;
 
                             case 3:
-                                /* Função de CONSULTA de clientes por INICIAIS aqui */
+                                consulta_clnt_INI(fp_cliente);/* Função de CONSULTA de clientes por INICIAIS aqui */
                                 break;
 
                             default:
@@ -150,7 +150,7 @@ int main(void){
                         do
                         {
                             printf("\n\n\tSelecione por qual campo deseja CONSULTAR:");
-                            printf("\n\t1->Consulta por CPF\t2->Consulta por ID\n\t3->Consulta INICIAIS\t0->Voltar ao Menu de Consultas");
+                            printf("\n\t1->Consulta por CPF\t2->Consulta por ID\n\t3->Consulta por INICIAIS\t0->Voltar ao Menu de Consultas");
                             printf("\n\nOpção selecionada: ");
                             scanf("%d", &subOption2);
                             switch (subOption2)
@@ -181,7 +181,7 @@ int main(void){
                         do
                         {
                             printf("\n\n\tSelecione por qual campo deseja CONSULTAR:");
-                            printf("\n\t1->Consulta por CNPJ\t2->Consulta por ID\n\t3->Consulta INICIAIS\t0->Voltar ao Menu de Consultas");
+                            printf("\n\t1->Consulta por CNPJ\t2->Consulta por ID\n\t3->Consulta por INICIAIS\t0->Voltar ao Menu de Consultas");
                             printf("\n\nOpção selecionada: ");
                             scanf("%d", &subOption2);
                             switch (subOption2)

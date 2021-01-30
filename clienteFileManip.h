@@ -15,4 +15,6 @@ void consulta_clnt_CPF(FILE *);
 
 void consulta_clnt_ID(FILE*);
 
+void consulta_clnt_INI(FILE*);
+
 #endif //CLNT_FILE_MANIP_H_INCLUDED

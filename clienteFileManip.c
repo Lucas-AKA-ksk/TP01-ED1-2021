@@ -199,3 +199,38 @@ void consulta_clnt_ID(FILE *arq){
     }while(sair !=1);
 }
 
+void consulta_clnt_INI(FILE *arq){
+    char ini[4];
+    int sair = 1,count;
+    Cliente search;
+    
+    do
+    {
+        printf("\nDigite as 3 primeiras letras do nome do cliente \no qual deseja CONSULTAR : ");
+		setbuf(stdin,NULL);
+        fgets(ini,sizeof(ini),stdin);
+        check_newline(ini);
+        
+        count = 0;
+        fseek(arq,0,SEEK_SET);
+
+        while(fread(&search,sizeof(Cliente),1,arq)==1)
+        {
+    	    if(strncmp(search.nome,ini,3)==0)
+            {
+                printf("\n\nNome do Cliente: %s",search.nome);
+                printf("\nCPF do Cliente: %s",search.cpf); 
+			    printf("\nEMAIL do Cliente: %s",search.email); 
+			    printf("\nTelefone do cliente: %s",search.telefone); 
+			    printf("\nID do Cliente: %lu",search.id);
+                count++;
+            }
+        }
+        if(count==0)
+            printf("\n\nNão existem Clientes que possuem esse prefixo...");
+        printf("\n\nDeseja Sair da Consulta? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    } while (sair!=1);
+    
+}
+
