@@ -5,10 +5,11 @@
 #include "vendedorFileManip.h"
 #include "fornecedorFileManip.h"
 #include "utilityFunctions.h"
+#include "produtoFileManip.h"
 
 int main(void){
     setlocale(LC_ALL,"");
-    int option, subOption, subOption2, last_clnt_id, last_vnddr_id, last_frncdr_id;
+    int option, subOption, subOption2, last_clnt_id, last_vnddr_id, last_frncdr_id, last_prdt_id;
     FILE *fp_cliente,*fp_notaFiscal,*fp_itemNotaFiscal,*fp_produto,*fp_vendedor,*fp_fornecedor,*fp_notaCompra,*fp_itemCompra;
     open_file(&fp_cliente,"record-files/cliente.dat");
     open_file(&fp_notaFiscal,"record-files/notaFiscal.dat");
@@ -23,7 +24,8 @@ int main(void){
     (won't work if delete function is implemented) */
     last_clnt_id = (ftell(fp_cliente)/sizeof(Cliente))+1; 
     last_vnddr_id = (ftell(fp_vendedor)/sizeof(Vendedor))+1;
-    last_frncdr_id = (ftell(fp_fornecedor)/sizeof(Fornecedor)+1);
+    last_frncdr_id = (ftell(fp_fornecedor)/sizeof(Fornecedor))+1;
+    last_prdt_id = (ftell(fp_produto)/sizeof(Produto))+1;
 
     if (fp_cliente != NULL && fp_notaFiscal != NULL && fp_itemNotaFiscal != NULL && fp_produto != NULL && fp_vendedor != NULL && fp_fornecedor != NULL && fp_notaCompra != NULL && fp_itemCompra != NULL) /* If all files were sucessfully opened */
     {
@@ -46,7 +48,7 @@ int main(void){
                 do
                 {
                     printf("\n\n\tSelecione qual tipo de cadastro deseja REALIZAR:");
-                    printf("\n\t1->Cadastro de Clientes\t2->Cadastro de Vendedores\n\t3->Cadastro de Fornecedores\t0->Voltar ao Menu Principal");
+                    printf("\n\t1->Cadastro de Clientes\t2->Cadastro de Vendedores\n\t3->Cadastro de Fornecedores\t4->Cadastro de Produtos\n\t0->Voltar ao Menu Principal");
                     printf("\n\nOpção selecionada: ");
                     scanf("%d", &subOption);
                     switch (subOption)
@@ -65,6 +67,11 @@ int main(void){
                     case 3:
                         cadastro_fornecedor(fp_fornecedor, &last_frncdr_id);
                         break;
+
+                    case 4:
+                        cadastro_produto(fp_produto, &last_prdt_id);
+                        break;
+
 
                     default:
                         printf("\nDigite um valor valido para realizar uma operação.\n");
