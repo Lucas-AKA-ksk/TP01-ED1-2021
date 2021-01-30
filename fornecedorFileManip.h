@@ -15,4 +15,6 @@ void consulta_frncdr_CPF(FILE*);
 
 void consulta_frncdr_ID(FILE*);
 
+void consulta_frncdr_INI(FILE*);
+
 #endif //FRNCDR_FILE_MANIP_H_INCLUDED

@@ -233,7 +233,7 @@ void consulta_vnddr_INI(FILE *arq){
     
     do
     {
-        printf("\nDigite as 3 primeiras letras do nome do Vandedor \no qual deseja CONSULTAR : ");
+        printf("\nDigite as 3 primeiras letras do nome do Vendedor \no qual deseja CONSULTAR : ");
 		setbuf(stdin,NULL);
         fgets(ini,sizeof(ini),stdin);
         check_newline(ini);

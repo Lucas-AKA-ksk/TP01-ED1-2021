@@ -199,7 +199,7 @@ int main(void){
                                 break;
 
                             case 3:
-                                /* Função de CONSULTA de vendedores por INICIAIS aqui */
+                                consulta_frncdr_INI(fp_fornecedor);/* Função de CONSULTA de vendedores por INICIAIS aqui */
                                 break;
 
                             default:

@@ -200,3 +200,38 @@ void consulta_frncdr_ID(FILE *arq){
     }while(sair !=1);
 }
 
+void consulta_frncdr_INI(FILE *arq){
+    char ini[4];
+    int sair = 1,count;
+    Fornecedor search;
+    
+    do
+    {
+        printf("\nDigite as 3 primeiras letras do nome do Fornecedor \no qual deseja CONSULTAR : ");
+		setbuf(stdin,NULL);
+        fgets(ini,sizeof(ini),stdin);
+        check_newline(ini);
+        
+        count = 0;
+        fseek(arq,0,SEEK_SET);
+
+        while(fread(&search,sizeof(Fornecedor),1,arq)==1)
+        {
+    	    if(strncmp(search.nome,ini,3)==0)
+            {
+                printf("\n\nNome do Vendedor: %s",search.nome);
+                printf("\nCPF do Vendedor: %s",search.cnpj); 
+			    printf("\nEMAIL do Vendedor: %s",search.email); 
+			    printf("\nTelefone do Vendedor: %s",search.telefone);
+			    printf("\nID do Vendedor: %lu",search.id);
+                count++;
+            }
+        }
+        if(count==0)
+            printf("\n\nNão existem Fornecedores que possuem esse prefixo...");
+        printf("\n\nDeseja Sair da Consulta? 1-Sim 2-Não");
+        scanf("%d",&sair);
+    } while (sair!=1);
+    
+}
+
