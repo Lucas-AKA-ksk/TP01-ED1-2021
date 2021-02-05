@@ -17,4 +17,6 @@ void consulta_vnddr_ID(FILE*);
 
 void consulta_vnddr_INI(FILE*);
 
+int login_vendedor(FILE*,char*,char*);
+
 #endif //VNDDR_FILE_MANIP_H_INCLUDED

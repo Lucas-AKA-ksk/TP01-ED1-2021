@@ -4,7 +4,8 @@
 #include "structDeclarations.h"
 #include "utilityFunctions.h"
 
-void cadastro_vendedor(FILE *arq, int *id){
+void cadastro_vendedor(FILE *arq, int *id)
+{
     char cpf[12];
     int sair = 1;
     Vendedor new;
@@ -60,16 +61,18 @@ void cadastro_vendedor(FILE *arq, int *id){
     }while(sair!=2);
 }
 
-void listar_vendedores(FILE *arq){
+void listar_vendedores(FILE *arq)
+{
     Vendedor r;
     fseek(arq,0,SEEK_SET);
     printf("\nListagem de Vendedores");
-    printf("\nID\t\tMATRICULA\t\tNOME\t\t\t\tCPF\t\tEMAIL\t\t\tTELEFONE");
+    printf("\nID\t\tMATRICULA\t\tNOME\t\t\t\tCPF\t\tEMAIL\t\t\tTELEFONE\t\t\tSENHA:");
     while(fread(&r,sizeof(Vendedor),1,arq))
-        printf("\n%lu\t\t%s\t\t%s\t\t\t\t%s\t\t%s\t\t\t%s",r.id,r.matricula,r.nome,r.cpf,r.email,r.telefone);
+        printf("\n%lu\t\t%s\t\t%s\t\t\t\t%s\t\t%s\t\t\t%s\t\t\t%s",r.id,r.matricula,r.nome,r.cpf,r.email,r.telefone,r.password);
 }
 
-int pesquisa_vnddr_CPF(FILE *arq,char* cpf){
+int pesquisa_vnddr_CPF(FILE *arq,char* cpf)
+{
    	Vendedor r;
    	int posicao=0;
    	fseek(arq,0,SEEK_SET);
@@ -83,7 +86,8 @@ int pesquisa_vnddr_CPF(FILE *arq,char* cpf){
    	return -1;
 }
 
-int pesquisa_vnddr_ID(FILE *arq,unsigned long id){
+int pesquisa_vnddr_ID(FILE *arq,unsigned long id)
+{
    	Vendedor r;
    	int posicao=0;
    	fseek(arq,0,SEEK_SET);
@@ -261,5 +265,28 @@ void consulta_vnddr_INI(FILE *arq){
         scanf("%d",&sair);
     } while (sair!=1);
     
+}
+
+int login_vendedor(FILE *arq,char *cpf, char* password)
+{
+    int posicao = pesquisa_vnddr_CPF(arq,cpf);
+    Vendedor search;
+    
+    if(posicao!=-1){
+        fseek(arq,posicao*sizeof(Vendedor),SEEK_SET);
+        fread(&search,sizeof(Vendedor),1,arq);
+        if(strcmp(search.password,password)==0)
+            return posicao;
+        else
+        {
+            printf("\nSenha incorreta!!");
+            return posicao;
+        }
+    }
+    else
+    {
+        printf("\nCPF incorreto!!");
+        return posicao;
+    }
 }
 

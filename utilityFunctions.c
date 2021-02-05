@@ -11,17 +11,20 @@ void open_file(FILE** fp,char* filename)
     }
 };
 
-void newline_remover(char *s){
+void newline_remover(char *s)
+{
     if(s[strlen(s)-1]=='\n')
         s[strlen(s)-1]='\0';
 }
 
-void check_newline(char *s){
-    if(strchr(s,'\n')==NULL){
+void check_newline(char *s)
+{
+    if(strchr(s,'\n')==NULL) /* Se \n  não for encontrado*/
+    {
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
     }
-    else
+    else 
         newline_remover(s);
 }
 

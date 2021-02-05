@@ -14,7 +14,6 @@ typedef struct
 {
     unsigned long id;
     unsigned long idCliente;
-    char numeroNota[8];
     unsigned long idVendedor;
     char dataCompra[11];
     float valorTotal;
