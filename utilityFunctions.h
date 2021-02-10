@@ -11,4 +11,8 @@ int validarCPF(char*);
 
 int validarCNPJ(char*);
 
+void get_sys_date(char*,int);
+
+int verify_date(char*);
+
 #endif //UTILITY_H_INCLUDED

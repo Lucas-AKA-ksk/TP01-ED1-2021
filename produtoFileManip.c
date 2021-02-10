@@ -62,3 +62,68 @@ void atualizar_estoque(FILE *arq, int posicao, int qtd)
     fseek(arq,posicao*sizeof(Produto),SEEK_SET);
     fwrite(&p,sizeof(Produto),1,arq);
 }
+
+void atualizar_preco(FILE *arqC, FILE *arqH, int posicao, float mult)
+{
+    /* Adicionar atualização de histórico */
+    historicoPreco h;
+    Produto p;
+
+    fseek(arqC,posicao*sizeof(Produto),SEEK_SET);
+    fread(&p,sizeof(Produto),1,arqC);
+
+    h.idProduto = p.id;
+    get_sys_date(h.dataAlteracao,sizeof(h.dataAlteracao));
+    h.valor = p.precoUnitario;
+    fseek(arqH,0,SEEK_END);
+    fwrite(&h,sizeof(historicoPreco),1,arqH);
+
+    printf("\nPreço antes da alteração: %.2f",p.precoUnitario); //Testing purposes
+    p.precoUnitario += p.precoUnitario*mult;
+    printf("\nPreço depois da alteração: %.2f",p.precoUnitario); //Testing purposes
+
+    fseek(arqC,posicao*sizeof(Produto),SEEK_SET);
+    fwrite(&p,sizeof(Produto),1,arqC);
+}
+
+void reajuste_preco_individual(FILE *arqC,FILE *arqH)
+{
+    int sair, posicao;
+    unsigned long id;
+    float mult;
+    do
+    {
+        printf("\nDigite a ID do produto: ");
+        scanf("%lu",&id);
+        setbuf(stdin,NULL);
+
+        posicao = pesquisa_prdt(arqC,id);
+
+        if(posicao!=-1)
+        {
+            printf("\nDigite a porcentagem do reajuste(EX: 0,1 = 10%%): ");
+            scanf("%f",&mult);
+            setbuf(stdin,NULL);
+            atualizar_preco(arqC,arqH,posicao,mult);
+        }
+        else
+            printf("\nNenhum produto corresponde a ID fornecida!!");
+        printf("\nDeseja Sair da Att de Produtos?? 1->SIM 2->NÃO ");
+        scanf("%d",&sair);
+    } while (sair!=1);
+    
+}
+
+void reajuste_preco_all(FILE *arqC, FILE *arqH)
+{
+    float mult;
+    int id = 1, posicao;
+    printf("\nDigite a porcentagem do reajuste(EX: 0,1 = 10%%): ");
+    scanf("%f",&mult);
+    setbuf(stdin,NULL);
+    while ((posicao=pesquisa_prdt(arqC,id))!=-1)
+    {
+        atualizar_preco(arqC,arqH,posicao,mult);
+        id++;
+    }
+}

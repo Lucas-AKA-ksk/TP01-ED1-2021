@@ -59,7 +59,6 @@ typedef struct
 typedef struct
 {
     unsigned long id;
-    char numeroNota[10];
     unsigned long idFornecedor;
     char dataCompra[11];
     float valorTotal;
@@ -69,9 +68,16 @@ typedef struct
 {
     unsigned long id;
     unsigned long idProduto;
-    unsigned long idNotacompra;
+    unsigned long idNotaCompra;
     unsigned int quantidade;
     float valorUnitario;
 }ItemNotaCompra;
+
+typedef struct
+{
+    unsigned long idProduto;
+    char dataAlteracao[11];
+    float valor;
+}historicoPreco;
 
 #endif // STRUCT_H_INCLUDED
