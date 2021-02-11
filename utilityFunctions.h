@@ -7,6 +7,8 @@ void newline_remover(char*);
 
 void check_newline(char*);
 
+void format_string(char*);
+
 int validarCPF(char*);
 
 int validarCNPJ(char*);
@@ -14,5 +16,7 @@ int validarCNPJ(char*);
 void get_sys_date(char*,int);
 
 int verify_date(char*);
+
+int smaller_date(char*,char*);
 
 #endif //UTILITY_H_INCLUDED

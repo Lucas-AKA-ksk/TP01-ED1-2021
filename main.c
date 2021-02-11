@@ -24,13 +24,21 @@ int main(void){
     
     /* Gets first available ID based on number of entries in the file
     (won't work if delete function is implemented) */
+    fseek(fp_cliente,0,SEEK_END);
     last_clnt_id = (ftell(fp_cliente)/sizeof(Cliente))+1;
+    fseek(fp_notaFiscal,0,SEEK_END);
     last_nf_id = (ftell(fp_notaFiscal)/sizeof(NotaFiscal))+1;
+    fseek(fp_itemNotaFiscal,0,SEEK_END);
     last_inf_id = (ftell(fp_itemNotaFiscal)/sizeof(ItemNotaFiscal))+1;
+    fseek(fp_produto,0,SEEK_END);
     last_prdt_id = (ftell(fp_produto)/sizeof(Produto))+1;
+    fseek(fp_vendedor,0,SEEK_END);
     last_vnddr_id = (ftell(fp_vendedor)/sizeof(Vendedor))+1;
+    fseek(fp_fornecedor,0,SEEK_END);
     last_frncdr_id = (ftell(fp_fornecedor)/sizeof(Fornecedor))+1;
+    fseek(fp_notaCompra,0,SEEK_END);
     last_nc_id = (ftell(fp_notaCompra)/sizeof(NotaCompra))+1;
+    fseek(fp_itemNotaCompra,0,SEEK_END);
     last_inc_id = (ftell(fp_itemNotaCompra)/sizeof(ItemNotaCompra))+1;
 
     if (fp_cliente != NULL && fp_notaFiscal != NULL && fp_itemNotaFiscal != NULL && fp_produto != NULL && fp_vendedor != NULL && fp_fornecedor != NULL && fp_notaCompra != NULL && fp_itemNotaCompra != NULL) /* If all files were sucessfully opened */
@@ -39,7 +47,7 @@ int main(void){
         {
             printf("\n####Sistema de gerenciamento de loja####");
             printf("\nSelecione qual operacao deseja realizar:");
-            printf("\n1->Cadastros\n2->Alterações\n3->Consultas\n4->Listagens\n5->Compras e Vendas\n0->Fechar o programa");
+            printf("\n1->Cadastros\n2->Alterações\n3->Consultas\n4->Listagens\n5->Compras e Vendas\n6->Relatorios\n0->Fechar o programa");
             printf("\n\nOpção selecionada: ");
             scanf("%d", &option);
             setbuf(stdin,NULL);
@@ -299,9 +307,40 @@ int main(void){
                         printf("\nDigite um valor valido para realizar uma operação.\n");
                         break;
                     }
-                
+
                 } while (subOption!=0);
                 break;    
+
+            case 6:/* Sub-menu de relatorios */
+                do
+                {
+                    printf("\n\n\tDeseja realizar qual operação:");
+                    printf("\n\t1->Relatorio Notas fiscais\n\t2->Relatorio Notas de Compra\n\t3->Compras de um Cliente por Data\n\t0->Voltar ao Menu Principal");
+                    printf("\n\nOpção selecionada: ");
+                    scanf("%d", &subOption);
+                    setbuf(stdin,NULL);
+
+                    switch (subOption)
+                    {
+                    case 1:
+                        relatorio_notaFiscal(fp_notaFiscal,fp_itemNotaFiscal);
+                        break;
+                
+                    case 2:
+                        relatorio_notaCompra(fp_notaCompra,fp_itemNotaCompra);
+                        break;
+
+                    case 3:
+                        relatorio_cliente(fp_cliente,fp_notaFiscal,fp_itemNotaFiscal);
+                        break;
+
+                    default:
+                        printf("\nDigite um valor valido para realizar uma operação.\n");
+                        break;
+                    }
+
+                } while (subOption!=0);
+                break;
 
             default:
                 printf("\nDigite um valor valido para realizar uma operação.\n");

@@ -163,13 +163,9 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                                         setbuf(stdin,NULL);
                                         scanf("%d",&auxQTD);
 
-                                        if (p.quantidadeEstoque/*+C[cIndex].quantidadeVendida)*/>=auxQTD) /* Caso exista estoque o suficiente de dado Produto */
+                                        if (p.quantidadeEstoque>=auxQTD) /* Caso exista estoque o suficiente de dado Produto */
                                         {
                                             C[cIndex].valorVenda = auxQTD*p.precoUnitario;
-                                            /*if(auxQTD>C[cIndex].quantidadeVendida)
-                                                atualizar_estoque(arqProd,posicaoP,-(auxQTD-C[cIndex].quantidadeVendida));
-                                            else if (auxQTD<=C[cIndex].quantidadeVendida)
-                                                atualizar_estoque(arqProd,posicaoP,(C[cIndex].quantidadeVendida-auxQTD));*/
                                             C[cIndex].quantidadeVendida=auxQTD;
                                             
                                         }
@@ -418,7 +414,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                 } 
                 break;
 
-
             case 4: /* Fechamento da venda */
                             
                 if(cartPos>0) /* O fechamento só pode ocorrer se houver ao menos um item no carrinho */
@@ -438,7 +433,7 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                             auxVT+=C[i].valorVenda;
                             atualizar_estoque(arqProd,C[i].idProduto-1,C[i].quantidadeVendida);
                             fseek(arqINC,0,SEEK_END);
-                            fwrite(&INC,sizeof(ItemNotaFiscal),1,arqINC); 
+                            fwrite(&INC,sizeof(ItemNotaCompra),1,arqINC); 
                         }
                         i++;
                     }
@@ -478,7 +473,7 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
 
 
                     fseek(arqNC,0,SEEK_END);
-                    fwrite(&NC,sizeof(NotaFiscal),1,arqNC);
+                    fwrite(&NC,sizeof(NotaCompra),1,arqNC);
 
                     free(C);
                     fecharVenda = 0;
@@ -497,16 +492,318 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
     }
 }
 
-int pesquisa_carrinho(Carrinho *c, int size, unsigned int id){
-    
-    int i = 0;
+void relatorio_notaFiscal(FILE *arqNF, FILE *arqINF)
+{
+    FILE *fp_relatorio;
+    NotaFiscal NF;
+    ItemNotaFiscal INF;
+    int sair, posicao, escolha;
+    unsigned long id;
+    do
+    {
+        printf("\nDigite a ID da Nota Fiscal: ");
+        scanf("%lu",&id);
+        setbuf(stdin,NULL);
 
+        posicao = pesquisa_NF_id(arqNF,id);
+
+        if(posicao!=-1)
+        {
+            fseek(arqNF,posicao*sizeof(NotaFiscal),SEEK_SET);
+            fread(&NF,sizeof(NotaFiscal),1,arqNF);
+
+            /* escolha entre print na tela e fprintf */
+            printf("\nVoce deseja os relatório na tela ou em arquivo?\n1->TELA 2->ARQUIVO\nEscolha: ");
+            scanf("%d",&escolha);
+            setbuf(stdin,NULL);
+            switch (escolha)
+            {
+            case 1:
+                printf("\n\n#### ~Dados da nota %lu~####",NF.id);
+                printf("\nVendedor numero: %lu",NF.idVendedor);
+                printf("\nCliente numero: %lu",NF.idCliente);
+                printf("\nData da Compra: %s",NF.dataCompra);
+                fseek(arqINF,0,SEEK_SET);
+                while(fread(&INF,sizeof(ItemNotaFiscal),1,arqINF))
+                {
+                    if(INF.idNota==NF.id)
+                    {
+                        printf("\n~~~~~~~~~~~~~~~");
+                        printf("\nProduto numero: %lu",INF.idProduto);
+                        printf("\nPreco(UN.): %.2f",INF.precoUnitario);
+                        printf("\nQuantidade: %u",INF.quantidade);
+                        printf("\n~~~~~~~~~~~~~~~\n");
+                    }
+                }
+                break;
+            
+            case 2:
+                fp_relatorio = fopen("relatorio.txt","w");
+                if(fp_relatorio!=NULL)
+                {
+                    fprintf(fp_relatorio,"\n\n#### ~Dados da nota %lu~####",NF.id);
+                    fprintf(fp_relatorio,"\nVendedor numero: %lu",NF.idVendedor);
+                    fprintf(fp_relatorio,"\nCliente numero: %lu",NF.idCliente);
+                    fprintf(fp_relatorio,"\nData da Compra: %s",NF.dataCompra);
+                    fseek(arqINF,0,SEEK_SET);
+                    while(fread(&INF,sizeof(ItemNotaFiscal),1,arqINF))
+                    {
+                        if(INF.idNota==NF.id)
+                        {
+                            fprintf(fp_relatorio,"\n~~~~~~~~~~~~~~~");
+                            fprintf(fp_relatorio,"\nProduto numero: %lu",INF.idProduto);
+                            fprintf(fp_relatorio,"\nPreco(UN.): %.2f",INF.precoUnitario);
+                            fprintf(fp_relatorio,"\nQuantidade: %u",INF.quantidade);
+                            fprintf(fp_relatorio,"\n~~~~~~~~~~~~~~~\n");
+                        }
+                    }
+                    fclose(fp_relatorio);
+                }
+                else
+                    printf("\nERRO: Não foi possível abrir o arquivo...");
+                break;
+
+            default:
+                printf("\nDigite um valor valido para realizar uma operação.\n");
+                break;
+            }
+        }
+        else
+            printf("\nA id digitada não corresponde a nenhuma Nota cadastrada no registro...");
+        printf("\nDeseja gerar outro relatório??\n1->SIM 2->NAO\nEscolha: ");
+        scanf("%d",&sair);
+    }while (sair!=2);
+}
+
+void relatorio_notaCompra(FILE *arqNC, FILE *arqINC)
+{
+    FILE *fp_relatorio;
+    NotaCompra NC;
+    ItemNotaCompra INC;
+    int sair, posicao,escolha;
+    unsigned long id;
+    do
+    {
+        printf("\nDigite a ID da Nota Compra: ");
+        scanf("%lu",&id);
+        setbuf(stdin,NULL);
+
+        posicao = pesquisa_NC_id(arqNC,id);
+
+        if(posicao!=-1)
+        {
+            fseek(arqNC,posicao*sizeof(NotaCompra),SEEK_SET);
+            fread(&NC,sizeof(NotaCompra),1,arqNC);
+
+            printf("\nVoce deseja os relatório na tela ou em arquivo?\n1->TELA 2->ARQUIVO\nEscolha: ");
+            scanf("%d",&escolha);
+            setbuf(stdin,NULL);
+            switch (escolha)
+            {
+            case 1:
+                printf("\n\n#### ~Dados da nota %lu~####",NC.id);
+                printf("\nFornecedor numero: %lu",NC.idFornecedor);
+                printf("\nData da Compra: %s",NC.dataCompra);
+                fseek(arqINC,0,SEEK_SET);
+                while(fread(&INC,sizeof(ItemNotaCompra),1,arqINC))
+                {
+                    if(INC.idNotaCompra==NC.id)
+                    {
+                        printf("\n~~~~~~~~~~~~~~~");
+                        printf("\nProduto numero: %lu",INC.idProduto);
+                        printf("\nPreco(UN.): %.2f",INC.valorUnitario);
+                        printf("\nQuantidade: %u",INC.quantidade);
+                        printf("\n~~~~~~~~~~~~~~~\n");
+                    }
+                }
+                break;
+            
+            case 2:
+                fp_relatorio = fopen("relatorio.txt","w");
+                if(fp_relatorio!=NULL)
+                {
+                    fprintf(fp_relatorio,"\n\n#### ~Dados da nota %lu~####",NC.id);
+                    fprintf(fp_relatorio,"\nFornecedor numero: %lu",NC.idFornecedor);
+                    fprintf(fp_relatorio,"\nData da Compra: %s",NC.dataCompra);
+                    fseek(arqINC,0,SEEK_SET);
+                    while(fread(&INC,sizeof(ItemNotaCompra),1,arqINC))
+                    {
+                        if(INC.idNotaCompra==NC.id)
+                        {
+                            fprintf(fp_relatorio,"\n~~~~~~~~~~~~~~~");
+                            fprintf(fp_relatorio,"\nProduto numero: %lu",INC.idProduto);
+                            fprintf(fp_relatorio,"\nPreco(UN.): %.2f",INC.valorUnitario);
+                            fprintf(fp_relatorio,"\nQuantidade: %u",INC.quantidade);
+                            fprintf(fp_relatorio,"\n~~~~~~~~~~~~~~~\n");
+                        }
+                    }
+                    fclose(fp_relatorio);
+                }
+                else
+                    printf("\nERRO: Não foi possível abrir o arquivo...");
+                break;
+
+            default:
+                printf("\nDigite um valor valido para realizar uma operação.\n");
+                break;
+            }
+        }
+        else
+            printf("\nA id digitada não corresponde a nenhuma Nota cadastrada no registro...");
+        printf("\nDeseja gerar outro relatório??\n1->SIM 2->NAO\nEscolha: ");
+        scanf("%d",&sair);
+    }while (sair!=2);
+}
+
+int pesquisa_NF_id(FILE *arq, unsigned long id)
+{
+    NotaFiscal r;
+    int posicao=0;
+    fseek(arq,0,SEEK_SET);
+    while(fread(&r,sizeof(NotaFiscal),1,arq)==1)
+    {
+        if(r.id==id)
+            return posicao;
+        else
+            posicao++;
+    }
+    return -1;
+}
+
+int pesquisa_NC_id(FILE *arq, unsigned long id)
+{
+    NotaCompra r;
+    int posicao=0;
+    fseek(arq,0,SEEK_SET);
+    while(fread(&r,sizeof(NotaCompra),1,arq)==1)
+    {
+        if(r.id==id)
+            return posicao;
+        else
+            posicao++;
+    }
+    return -1;
+}
+
+void relatorio_cliente(FILE *arqClnt, FILE *arqNF, FILE *arqINF)
+{
+    FILE *fp_relatorio;
+    NotaFiscal NF;
+    ItemNotaFiscal INF;
+    int sair, posicao, escolha;
+    unsigned long id;
+    char dataInicial[11], dataFinal[11];
+    do
+    {
+        printf("\nDigite a ID do Cliente: ");
+        scanf("%lu",&id);
+        setbuf(stdin,NULL);
+        //posicao = pesquisa_clnt_ID(arqClnt,id)
+        if(pesquisa_clnt_ID(arqClnt,id)/*posicao*/!=-1)
+        {
+            do
+            {
+                printf("\nDigite o inicio do intervalo de datas (formato \"dd/mm/aaaa\"): ");
+                fgets(dataInicial,sizeof(dataInicial),stdin);
+                check_newline(dataInicial);
+            } while (!verify_date(dataInicial));
+            do
+            {
+                printf("\nDigite o fim do intervalo de datas (formato \"dd/mm/aaaa\"): ");
+                fgets(dataFinal,sizeof(dataFinal),stdin);
+                check_newline(dataFinal);
+            } while (!verify_date(dataFinal));
+            if(smaller_date(dataInicial,dataFinal))
+            {
+                printf("\nVoce deseja os relatório na tela ou em arquivo?\n1->TELA 2->ARQUIVO\nEscolha: ");
+                scanf("%d",&escolha);
+                setbuf(stdin,NULL);
+                switch (escolha)
+                {
+                case 1:
+                    fseek(arqNF,0,SEEK_SET);
+                    while (fread(&NF,sizeof(NotaFiscal),1,arqNF))
+                    {
+                        //printf("\nTeste testado\n");
+                        if (NF.idCliente==id && smaller_date(dataInicial,NF.dataCompra) && smaller_date(NF.dataCompra,dataFinal))
+                        {
+                            printf("\n\n#### ~Dados da nota %lu~####",NF.id);
+                            printf("\nVendedor numero: %lu",NF.idVendedor);
+                            printf("\nCliente numero: %lu",NF.idCliente);
+                            printf("\nData da Compra: %s",NF.dataCompra);
+                            fseek(arqINF,0,SEEK_SET);
+                            while(fread(&INF,sizeof(ItemNotaFiscal),1,arqINF))
+                            {
+                                if(INF.idNota==NF.id)
+                                {
+                                    printf("\n~~~~~~~~~~~~~~~");
+                                    printf("\nProduto numero: %lu",INF.idProduto);
+                                    printf("\nPreco(UN.): %.2f",INF.precoUnitario);
+                                    printf("\nQuantidade: %u",INF.quantidade);
+                                    printf("\n~~~~~~~~~~~~~~~\n");
+                                }
+                            }
+                        }
+                    }
+                    break;
+            
+                case 2:
+                    fp_relatorio = fopen("relatorio.txt","w");
+                    if(fp_relatorio!=NULL)
+                    {
+                        fseek(arqNF,0,SEEK_SET);
+                        while (fread(&NF,sizeof(NotaFiscal),1,arqNF))
+                        {
+                            if (NF.idCliente==id && smaller_date(dataInicial,NF.dataCompra) && smaller_date(NF.dataCompra,dataFinal))
+                            {
+                                fprintf(fp_relatorio,"\n\n#### ~Dados da nota %lu~####",NF.id);
+                                fprintf(fp_relatorio,"\nVendedor numero: %lu",NF.idVendedor);
+                                fprintf(fp_relatorio,"\nCliente numero: %lu",NF.idCliente);
+                                fprintf(fp_relatorio,"\nData da Compra: %s",NF.dataCompra);
+                                fseek(arqINF,0,SEEK_SET);
+                                while(fread(&INF,sizeof(ItemNotaFiscal),1,arqINF))
+                                {
+                                    if(INF.idNota==NF.id)
+                                    {
+                                        fprintf(fp_relatorio,"\n~~~~~~~~~~~~~~~");
+                                        fprintf(fp_relatorio,"\nProduto numero: %lu",INF.idProduto);
+                                        fprintf(fp_relatorio,"\nPreco(UN.): %.2f",INF.precoUnitario);
+                                        fprintf(fp_relatorio,"\nQuantidade: %u",INF.quantidade);
+                                        fprintf(fp_relatorio,"\n~~~~~~~~~~~~~~~\n");
+                                    }
+                                }
+                            } 
+                        }
+                        fclose(fp_relatorio);
+                    }
+                    else
+                    printf("\nERRO: Não foi possível abrir o arquivo...");
+                    break;
+
+                default:
+                    printf("\nDigite um valor valido para realizar uma operação.\n");
+                    break;
+                }
+            }
+            else
+                printf("\nIntervalo de datas invalido...");
+            
+        }
+        else
+            printf("\nA id digitada não corresponde a nenhum Cliente cadastrado no registro...");
+        printf("\nDeseja gerar outro relatório??\n1->SIM 2->NAO\nEscolha: ");
+        scanf("%d",&sair);
+    } while (sair!=2);
+    
+}
+
+int pesquisa_carrinho(Carrinho *c, int size, unsigned int id)
+{
+    int i = 0;
     while(i<size)
     {
         if(c[i].idProduto==id)
-        {
             return i;
-        }
         i++;
     }
     return -1;

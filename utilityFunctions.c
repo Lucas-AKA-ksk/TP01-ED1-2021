@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
 #include "utilityFunctions.h"
 
+/* Abre um arquivo existente para edição ou cria um arquivo caso não exista */
 void open_file(FILE** fp,char* filename)
 {
     *fp = fopen(filename,"r+b");
@@ -12,12 +14,15 @@ void open_file(FILE** fp,char* filename)
     }
 };
 
+/* Substitui o newline(\n) por nul(\0) */
 void newline_remover(char *s)
 {
     if(s[strlen(s)-1]=='\n')
         s[strlen(s)-1]='\0';
 }
 
+/* Verifica a existencia de um newline em uma string 's',
+caso não exista, consome o buffer, caso exista, chama newline_remover */
 void check_newline(char *s)
 {
     if(strchr(s,'\n')==NULL) /* Se \n  não for encontrado*/
@@ -29,6 +34,18 @@ void check_newline(char *s)
         newline_remover(s);
 }
 
+/* Transforma todos os caracteres da string 's' em uppercase */
+void format_string(char *s)
+{
+    int i;
+    for (i = 0; i < strlen(s); i++)
+    {
+        s[i]=toupper(s[i]);
+    }
+    
+}
+
+/* Verifica a validade de um CPF */
 int validarCPF(char *cpf)
 {
     int i, j, digito1 = 0, digito2 = 0;
@@ -78,6 +95,7 @@ int validarCPF(char *cpf)
     return 1;
 } 
 
+/* Verifica a validade de um CNPJ */
 int validarCNPJ(char *cnpj)
 {
     int i, j, digito1 = 0, digito2 = 0;
@@ -136,6 +154,7 @@ int validarCNPJ(char *cnpj)
     return 1;
 } 
 
+/* Obtem a data atual do sistema */
 void get_sys_date(char *array, int size)
 {
     time_t rawtime;
@@ -145,6 +164,7 @@ void get_sys_date(char *array, int size)
     strftime(array, size, "%d/%m/%Y", timeinfo);
 }
 
+/* Verifica se uma data é válida */
 int verify_date(char *data)
 {
     char dataF[11];
@@ -185,22 +205,52 @@ int verify_date(char *data)
                 printf("Data valida.\n");
             else{
                 printf("Dia invalido.\n");
-                printf("\nDigite novamente a Data de Nascimento do Cliente. ");
                 return 0;
             }
         }
         else
         {
             printf("Mes invalido.\n");
-            printf("\nDigite novamente a Data de Nascimento do Cliente. ");
             return 0;
         }
     }
     else
     {
         printf("Ano invalido.\n");
-        printf("\nDigite novamente a Data de Nascimento do Cliente. ");
         return 0;
     }
     return 1;
+}
+
+/* Verifica se data1 é menor que data2 */
+int smaller_date(char* date1,char* date2) 
+{
+    char date1_cpy[11], date2_cpy[11];
+    int day1,day2,mon1,mon2,year1,year2;
+    strcpy(date1_cpy,date1);
+    strcpy(date2_cpy,date2);
+
+    sscanf(strtok(date1_cpy, "/"), "%d", &day1);
+    sscanf(strtok(NULL, "/"), "%d", &mon1);
+    sscanf(strtok(NULL, "/"), "%d", &year1);
+
+    sscanf(strtok(date2_cpy, "/"), "%d", &day2);
+    sscanf(strtok(NULL, "/"), "%d", &mon2);
+    sscanf(strtok(NULL, "/"), "%d", &year2);
+
+    if(year1<year2) 
+        return 1;
+    else if(year1==year2) 
+        if(mon1<mon2) 
+            return 1;
+        else if(mon1==mon2) 
+            if(day1<=day2) 
+                return 1;
+            else 
+                return 0;
+        else 
+            return 0;
+    else 
+        return 0;
+    
 }
