@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include "vendedorFileManip.h"
+#include "vendedor.h"
 #include "structDeclarations.h"
-#include "utilityFunctions.h"
+#include "utility.h"
 
 void cadastro_vendedor(FILE *arq, int *id)
 {
@@ -13,7 +13,7 @@ void cadastro_vendedor(FILE *arq, int *id)
     do{
         do{
             printf("\nDigite o CPF do vendedor a ser cadastrado: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
             check_newline(cpf);
         }while(validarCPF(cpf)==0);
@@ -22,32 +22,32 @@ void cadastro_vendedor(FILE *arq, int *id)
             strcpy(new.cpf, cpf);
 			printf("valor que será inserido: %s",new.cpf); //TESTING PURPOSES
             printf("\nDigite a matricula do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.matricula, sizeof(new.matricula),stdin);
             check_newline(new.matricula);
             printf("valor que será inserido: %s",new.matricula); //TESTING PURPOSES
             printf("\nDigite o nome do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
 			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
             printf("\nDigite o email do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
 			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
             printf("\nDigite o telefone do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
 			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
             printf("\nDigite a senha do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.password, sizeof(new.password),stdin);
             check_newline(new.password);
             printf("valor que será inserido: %s",new.password); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
             new.id = *id;
 			printf("\nValor da ID: %lu",new.id);
 			(*id)++;
@@ -58,6 +58,7 @@ void cadastro_vendedor(FILE *arq, int *id)
             printf("\nCPF já cadastrado!! Operação cancelada!!");
         printf("\nDeseja Cadastrar outro Vendedor?\n\n1->Sim\t2->Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair!=2);
 }
 
@@ -109,7 +110,7 @@ void alteracao_vendedor(FILE *arq){
     do{
         do{
             printf("\nDigite o CPF do vendedor o qual o cadastro deverá ser alterado: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
             check_newline(cpf);
         }while(validarCPF(cpf)==0);
@@ -122,32 +123,32 @@ void alteracao_vendedor(FILE *arq){
             strcpy(new.cpf, cpf);
 			printf("valor que será inserido: %s",new.cpf); //TESTING PURPOSES
             printf("\nDigite a matricula do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.matricula, sizeof(new.matricula),stdin);
             check_newline(new.matricula);
             printf("valor que será inserido: %s",new.matricula); //TESTING PURPOSES
             printf("\nDigite o nome do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
 			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
             printf("\nDigite o email do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
 			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
             printf("\nDigite o telefone do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
 			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
             printf("\nDigite a senha do vendedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.password, sizeof(new.password),stdin);
             check_newline(new.password);
             printf("valor que será inserido: %s",new.password); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
 			printf("\nValor da ID: %lu",new.id);
             fseek(arq,posicao*sizeof(Vendedor),SEEK_SET);
             fwrite(&new,sizeof(Vendedor),1,arq);
@@ -157,6 +158,7 @@ void alteracao_vendedor(FILE *arq){
 
         printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -168,7 +170,7 @@ void consulta_vnddr_CPF(FILE *arq){
     do{
         do{
             printf("\nDigite o CPF do Vendedor o qual o deseja CONSULTAR: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
             check_newline(cpf);
         }while(validarCPF(cpf)==0);
@@ -194,6 +196,7 @@ void consulta_vnddr_CPF(FILE *arq){
 
         printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -203,8 +206,9 @@ void consulta_vnddr_ID(FILE *arq){
     Vendedor search;
     do{
         printf("\nDigite a ID do Vendedor o qual deseja CONSULTAR: ");
-		setbuf(stdin,NULL);
+		//setbuf(stdin,NULL);
         scanf("%lu",&id);
+        setbuf(stdin,NULL);
 
         posicao = pesquisa_vnddr_ID(arq,id);
         
@@ -227,6 +231,7 @@ void consulta_vnddr_ID(FILE *arq){
 
         printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -238,7 +243,7 @@ void consulta_vnddr_INI(FILE *arq){
     do
     {
         printf("\nDigite as 3 primeiras letras do nome do Vendedor \no qual deseja CONSULTAR : ");
-		setbuf(stdin,NULL);
+		//setbuf(stdin,NULL);
         fgets(ini,sizeof(ini),stdin);
         check_newline(ini);
         
@@ -263,6 +268,7 @@ void consulta_vnddr_INI(FILE *arq){
             printf("\n\nNão existem Vendedores que possuem esse prefixo...");
         printf("\n\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     } while (sair!=1);
     
 }

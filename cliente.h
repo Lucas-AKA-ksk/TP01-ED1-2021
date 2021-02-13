@@ -1,5 +1,5 @@
-#ifndef CLNT_FILE_MANIP_H_INCLUDED
-#define CLNT_FILE_MANIP_H_INCLUDED
+#ifndef CLIENTE_H_INCLUDED
+#define CLIENTE_H_INCLUDED
 
 void cadastro_cliente(FILE*,int*);
 
@@ -17,4 +17,4 @@ void consulta_clnt_ID(FILE*);
 
 void consulta_clnt_INI(FILE*);
 
-#endif //CLNT_FILE_MANIP_H_INCLUDED
+#endif //CLIENTE_H_INCLUDED

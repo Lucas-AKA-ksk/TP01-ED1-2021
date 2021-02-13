@@ -1,5 +1,5 @@
-#ifndef FRNCDR_FILE_MANIP_H_INCLUDED
-#define FRNCDR_FILE_MANIP_H_INCLUDED
+#ifndef FORNECEDOR_H_INCLUDED
+#define FORNECEDOR_H_INCLUDED
 
 void cadastro_fornecedor(FILE*,int*);
 
@@ -17,4 +17,4 @@ void consulta_frncdr_ID(FILE*);
 
 void consulta_frncdr_INI(FILE*);
 
-#endif //FRNCDR_FILE_MANIP_H_INCLUDED
+#endif //FORNECEDOR_H_INCLUDED

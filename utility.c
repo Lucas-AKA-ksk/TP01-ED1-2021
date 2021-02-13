@@ -2,7 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include "utilityFunctions.h"
+#include "utility.h"
 
 /* Abre um arquivo existente para edição ou cria um arquivo caso não exista */
 void open_file(FILE** fp,char* filename)

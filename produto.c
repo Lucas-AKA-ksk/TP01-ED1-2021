@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "structDeclarations.h"
-#include "produtoFileManip.h"
-#include "utilityFunctions.h"
+#include "produto.h"
+#include "utility.h"
 
 void cadastro_produto(FILE* arq, int *id)
 {
@@ -11,7 +11,6 @@ void cadastro_produto(FILE* arq, int *id)
 
     do
     {
-        setbuf(stdin,NULL);
         printf("\nDigite o nome do Produto que será cadastrado: ");
         fgets(new.nome,sizeof(new.nome),stdin);
         check_newline(new.nome);
@@ -25,6 +24,7 @@ void cadastro_produto(FILE* arq, int *id)
         fwrite(&new,sizeof(Produto),1,arq);
         printf("\nDeseja Sair do Cadastro de Produtos?? 1->SIM 2->NÃO ");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     } while (sair!=1);
     
 
@@ -65,7 +65,6 @@ void atualizar_estoque(FILE *arq, int posicao, int qtd)
 
 void atualizar_preco(FILE *arqC, FILE *arqH, int posicao, float mult)
 {
-    /* Adicionar atualização de histórico */
     historicoPreco h;
     Produto p;
 
@@ -110,6 +109,7 @@ void reajuste_preco_individual(FILE *arqC,FILE *arqH)
             printf("\nNenhum produto corresponde a ID fornecida!!");
         printf("\nDeseja Sair da Att de Produtos?? 1->SIM 2->NÃO ");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     } while (sair!=1);
     
 }

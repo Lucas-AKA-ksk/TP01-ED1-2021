@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include "fornecedorFileManip.h"
+#include "fornecedor.h"
 #include "structDeclarations.h"
-#include "utilityFunctions.h"
+#include "utility.h"
 
 void cadastro_fornecedor(FILE *arq, int *id){
     char cnpj[15];
@@ -12,7 +12,7 @@ void cadastro_fornecedor(FILE *arq, int *id){
     do{
         do{
             printf("\nDigite o CNPJ do fornecedor a ser cadastrado: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cnpj,sizeof(cnpj),stdin);
             check_newline(cnpj);
         }while(validarCNPJ(cnpj)==0);
@@ -21,21 +21,21 @@ void cadastro_fornecedor(FILE *arq, int *id){
             strcpy(new.cnpj, cnpj);
 			printf("valor que será inserido: %s",new.cnpj); //TESTING PURPOSES
             printf("\nDigite o nome do fornecedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
 			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
             printf("\nDigite o email do fornecedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
 			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
             printf("\nDigite o telefone do fornecedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
 			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
             new.id = *id;
 			printf("\nValor da ID: %lu",new.id);
 			(*id)++;
@@ -46,6 +46,7 @@ void cadastro_fornecedor(FILE *arq, int *id){
             printf("\nCNPJ já cadastrado!! Operação cancelada!!");
         printf("\nDeseja Cadastrar outro Fornecedor\n\n1->Sim\t2->Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair!=2);
 }
 
@@ -94,7 +95,7 @@ void alteracao_fornecedor(FILE *arq){
     do{
         do{
             printf("\nDigite o CNPJ do fornecedor o qual o cadastro deverá ser alterado: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cnpj,sizeof(cnpj),stdin);
             check_newline(cnpj);
         }while(validarCNPJ(cnpj)==0);
@@ -107,21 +108,21 @@ void alteracao_fornecedor(FILE *arq){
             strcpy(new.cnpj, cnpj);
 			printf("valor que será inserido: %s",new.cnpj); //TESTING PURPOSES
             printf("\nDigite o nome do fornecedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
 			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
             printf("\nDigite o email do fornecedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
 			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
             printf("\nDigite o telefone do fornecedor: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
 			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
 			printf("\nValor da ID: %lu",new.id);
             fseek(arq,posicao*sizeof(Fornecedor),SEEK_SET);
             fwrite(&new,sizeof(Fornecedor),1,arq);
@@ -131,6 +132,7 @@ void alteracao_fornecedor(FILE *arq){
 
         printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -142,7 +144,7 @@ void consulta_frncdr_CPF(FILE *arq){
     do{
         do{
             printf("\nDigite o CNPJ do Fornecedor o qual deseja CONSULTAR: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cnpj,sizeof(cnpj),stdin);
             check_newline(cnpj);
         }while(validarCNPJ(cnpj)==0);
@@ -166,6 +168,7 @@ void consulta_frncdr_CPF(FILE *arq){
 
         printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -175,8 +178,9 @@ void consulta_frncdr_ID(FILE *arq){
     Fornecedor search;
     do{
         printf("\nDigite a ID do Fornecedor o qual deseja CONSULTAR: ");
-		setbuf(stdin,NULL);
+		//setbuf(stdin,NULL);
         scanf("%lu",&id);
+        setbuf(stdin,NULL);
 
         posicao = pesquisa_frncdr_ID(arq,id);
         
@@ -197,6 +201,7 @@ void consulta_frncdr_ID(FILE *arq){
 
         printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -208,7 +213,7 @@ void consulta_frncdr_INI(FILE *arq){
     do
     {
         printf("\nDigite as 3 primeiras letras do nome do Fornecedor \no qual deseja CONSULTAR : ");
-		setbuf(stdin,NULL);
+		//setbuf(stdin,NULL);
         fgets(ini,sizeof(ini),stdin);
         check_newline(ini);
         
@@ -231,6 +236,7 @@ void consulta_frncdr_INI(FILE *arq){
             printf("\n\nNão existem Fornecedores que possuem esse prefixo...");
         printf("\n\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     } while (sair!=1);
     
 }

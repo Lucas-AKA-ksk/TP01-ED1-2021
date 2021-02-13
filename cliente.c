@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "structDeclarations.h"
-#include "clienteFileManip.h"
-#include "utilityFunctions.h"
+#include "cliente.h"
+#include "utility.h"
 
 void cadastro_cliente(FILE *arq, int *id){
     char cpf[12];
@@ -12,7 +12,7 @@ void cadastro_cliente(FILE *arq, int *id){
     do{
         do{
             printf("\nDigite o CPF do cliente a ser cadastrado: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
             check_newline(cpf);
         }while(validarCPF(cpf)==0);
@@ -21,21 +21,21 @@ void cadastro_cliente(FILE *arq, int *id){
             strcpy(new.cpf, cpf);
 			printf("valor que será inserido: %s",new.cpf); //TESTING PURPOSES
             printf("\nDigite o nome do cliente: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
 			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
             printf("\nDigite o email do cliente: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
 			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
             printf("\nDigite o telefone do cliente: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
 			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
             new.id = *id;
 			printf("\nValor da ID: %lu",new.id);
 			(*id)++;
@@ -46,6 +46,7 @@ void cadastro_cliente(FILE *arq, int *id){
             printf("\nCPF já cadastrado!! Operação cancelada!!");
         printf("\nDeseja Cadastrar outro Cliente?\n\n1->Sim\t2->Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair!=2);
 }
 
@@ -94,7 +95,7 @@ void alteracao_cliente(FILE *arq){
     do{
         do{
             printf("\nDigite o CPF do cliente o qual o cadastro deverá ser alterado: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
             check_newline(cpf);
         }while(validarCPF(cpf)==0);
@@ -107,21 +108,21 @@ void alteracao_cliente(FILE *arq){
             strcpy(new.cpf, cpf);
 			printf("valor que será inserido: %s",new.cpf); //TESTING PURPOSES
             printf("\nDigite o nome do cliente: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
 			printf("valor que será inserido: %s",new.nome); //TESTING PURPOSES
             printf("\nDigite o email do cliente: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
 			printf("valor que será inserido: %s",new.email); //TESTING PURPOSES
             printf("\nDigite o telefone do cliente: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
 			printf("valor que será inserido: %s",new.telefone); //TESTING PURPOSES
-            setbuf(stdin,NULL);
+            //setbuf(stdin,NULL);
 			printf("\nValor da ID: %lu",new.id);
             fseek(arq,posicao*sizeof(Cliente),SEEK_SET);
             fwrite(&new,sizeof(Cliente),1,arq);
@@ -131,6 +132,7 @@ void alteracao_cliente(FILE *arq){
 
         printf("\nDeseja Sair da Ateração? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -141,7 +143,7 @@ void consulta_clnt_CPF(FILE *arq){
     do{
         do{
             printf("\nDigite o CPF do cliente o qual deseja CONSULTAR: ");
-			setbuf(stdin,NULL);
+			//setbuf(stdin,NULL);
             fgets(cpf,sizeof(cpf),stdin);
             check_newline(cpf);
         }while(validarCPF(cpf)==0);
@@ -165,6 +167,7 @@ void consulta_clnt_CPF(FILE *arq){
 
         printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -174,8 +177,9 @@ void consulta_clnt_ID(FILE *arq){
     Cliente search;
     do{
         printf("\nDigite a ID do Cliente o qual deseja CONSULTAR: ");
-		setbuf(stdin,NULL);
+		//setbuf(stdin,NULL);
         scanf("%lu",&id);
+        setbuf(stdin,NULL);
 
         posicao = pesquisa_clnt_ID(arq,id);
         
@@ -196,6 +200,7 @@ void consulta_clnt_ID(FILE *arq){
 
         printf("\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     }while(sair !=1);
 }
 
@@ -207,7 +212,7 @@ void consulta_clnt_INI(FILE *arq){
     do
     {
         printf("\nDigite as 3 primeiras letras do nome do cliente \no qual deseja CONSULTAR : ");
-		setbuf(stdin,NULL);
+		//setbuf(stdin,NULL);
         fgets(ini,sizeof(ini),stdin);
         check_newline(ini);
         
@@ -230,6 +235,7 @@ void consulta_clnt_INI(FILE *arq){
             printf("\n\nNão existem Clientes que possuem esse prefixo...");
         printf("\n\nDeseja Sair da Consulta? 1-Sim 2-Não");
         scanf("%d",&sair);
+        setbuf(stdin,NULL);
     } while (sair!=1);
     
 }

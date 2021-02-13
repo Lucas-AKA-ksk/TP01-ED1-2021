@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <locale.h>
 #include "structDeclarations.h"
-#include "clienteFileManip.h"
-#include "vendedorFileManip.h"
-#include "fornecedorFileManip.h"
-#include "utilityFunctions.h"
-#include "produtoFileManip.h"
+#include "cliente.h"
+#include "vendedor.h"
+#include "fornecedor.h"
+#include "utility.h"
+#include "produto.h"
 #include "operations.h"
+#include "relatorio.h"
 
 int main(void){
     setlocale(LC_ALL,"");
@@ -315,7 +316,7 @@ int main(void){
                 do
                 {
                     printf("\n\n\tDeseja realizar qual operação:");
-                    printf("\n\t1->Relatorio Notas fiscais\n\t2->Relatorio Notas de Compra\n\t3->Compras de um Cliente por Data\n\t0->Voltar ao Menu Principal");
+                    printf("\n\t1->Relatorio Notas fiscais\n\t2->Relatorio Notas de Compra\n\t3->Compras de um Cliente por Data\n\t4->Vendas de um Vendedor em um dia\n\t5->Vendas de um Vendedor em um mes\n\t6->Melhores vendedores e vendas do mês\n\t7->Melhores vendedores e vendas em um intervalo de tempo\n\t8->Historico de precos\n\t0->Voltar ao Menu Principal");
                     printf("\n\nOpção selecionada: ");
                     scanf("%d", &subOption);
                     setbuf(stdin,NULL);
@@ -332,6 +333,26 @@ int main(void){
 
                     case 3:
                         relatorio_cliente(fp_cliente,fp_notaFiscal,fp_itemNotaFiscal);
+                        break;
+
+                    case 4:
+                        relatorio_vnddr_dia(fp_vendedor,fp_notaFiscal,fp_itemNotaFiscal);
+                        break;
+
+                    case 5:
+                        relatorio_vnddr_mes(fp_vendedor,fp_notaFiscal,fp_itemNotaFiscal);
+                        break;
+
+                    case 6:
+                        melhor_vnddr_mes(fp_vendedor,fp_notaFiscal,fp_itemNotaFiscal);
+                        break;
+
+                    case 7:
+                        melhor_vnddr_intrvl(fp_vendedor,fp_notaFiscal,fp_itemNotaFiscal);
+                        break;
+
+                    case 8:
+                        historico_preco(fp_produto,fp_historicoPreco);
                         break;
 
                     default:

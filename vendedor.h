@@ -1,5 +1,5 @@
-#ifndef VNDDR_FILE_MANIP_H_INCLUDED
-#define VNDDR_FILE_MANIP_H_INCLUDED
+#ifndef VENDEDOR_H_INCLUDED
+#define VENDEDOR_H_INCLUDED
 
 void cadastro_vendedor(FILE*,int *);
 
@@ -19,4 +19,4 @@ void consulta_vnddr_INI(FILE*);
 
 int login_vendedor(FILE*,char*,char*);
 
-#endif //VNDDR_FILE_MANIP_H_INCLUDED
+#endif //VENDEDOR_H_INCLUDED

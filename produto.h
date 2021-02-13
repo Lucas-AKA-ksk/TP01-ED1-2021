@@ -1,5 +1,5 @@
-#ifndef PRDT_FILE_MANIP_H_INCLUDED
-#define PRDT_FILE_MANIP_H_INCLUDED
+#ifndef PRODUTO_H_INCLUDED
+#define PRODUTO_H_INCLUDED
 
 void cadastro_produto(FILE*,int*);
 
@@ -13,4 +13,4 @@ void reajuste_preco_individual(FILE*,FILE*);
 
 void reajuste_preco_all(FILE*,FILE*);
 
-#endif //PRDT_FILE_MANIP_H_INCLUDED
+#endif //PRODUTO_H_INCLUDED
