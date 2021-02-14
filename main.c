@@ -13,15 +13,15 @@ int main(void){
     setlocale(LC_ALL,"");
     int option, subOption, subOption2, last_clnt_id, last_vnddr_id, last_frncdr_id, last_prdt_id,last_nf_id,last_inf_id,last_nc_id,last_inc_id;
     FILE *fp_cliente,*fp_notaFiscal,*fp_itemNotaFiscal,*fp_produto,*fp_vendedor,*fp_fornecedor,*fp_notaCompra,*fp_itemNotaCompra,*fp_historicoPreco;
-    open_file(&fp_cliente,"record-files/cliente.dat");
-    open_file(&fp_notaFiscal,"record-files/notaFiscal.dat");
-    open_file(&fp_itemNotaFiscal,"record-files/itemNotaFiscal.dat");
-    open_file(&fp_produto,"record-files/produto.dat");
-    open_file(&fp_vendedor,"record-files/vendedor.dat");
-    open_file(&fp_fornecedor,"record-files/fornecedor.dat");
-    open_file(&fp_notaCompra,"record-files/notaCompra.dat");
-    open_file(&fp_itemNotaCompra,"record-files/itemCompra.dat");
-    open_file(&fp_historicoPreco,"record-files/historicoPreco.dat");
+    open_file(&fp_cliente,"cliente.dat");
+    open_file(&fp_notaFiscal,"notaFiscal.dat");
+    open_file(&fp_itemNotaFiscal,"itemNotaFiscal.dat");
+    open_file(&fp_produto,"produto.dat");
+    open_file(&fp_vendedor,"vendedor.dat");
+    open_file(&fp_fornecedor,"fornecedor.dat");
+    open_file(&fp_notaCompra,"notaCompra.dat");
+    open_file(&fp_itemNotaCompra,"itemCompra.dat");
+    open_file(&fp_historicoPreco,"historicoPreco.dat");
     
     /* Localizar a primeira ID disponível em cada arquivo */
     fseek(fp_cliente,0,SEEK_END);
