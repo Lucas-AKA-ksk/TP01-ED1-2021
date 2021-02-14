@@ -37,7 +37,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
             do
             {
                 printf("\nDigite a ID do CLIENTE: ");
-		        //setbuf(stdin,NULL);
                 scanf("%lu",&id);
                 setbuf(stdin,NULL);
                 
@@ -77,7 +76,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                                 C = (Carrinho*)realloc(C,(cartPos+1)*sizeof(Carrinho));
                                 
                             printf("\nDigite a id do Produto a ser vendido: ");
-                            //setbuf(stdin,NULL);
                             scanf("%lu",&C[cartPos].idProduto);
                             setbuf(stdin,NULL);
 
@@ -91,7 +89,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                                     fread(&p,sizeof(Produto),1,arqProd);
 
                                     printf("\nDigite a quantidade a ser vendido: ");
-                                    //setbuf(stdin,NULL);
                                     scanf("%d",&C[cartPos].quantidadeVendida);
                                     setbuf(stdin,NULL);
 
@@ -121,7 +118,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                             else
                             {
                                 printf("\nDigite a id do Produto a ser removido: ");
-                                //setbuf(stdin,NULL);
                                 scanf("%lu",&idOut);
                                 setbuf(stdin,NULL);
 
@@ -129,7 +125,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
 
                                 if (cIndex!=-1 && idOut!=0)
                                 {
-                                    //atualizar_estoque(arqProd,C[cIndex].idProduto-1,C[cIndex].quantidadeVendida);
                                     C[cIndex].idProduto=0;
                                     printf("\nProduto Removido!");
                                 }
@@ -149,7 +144,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                             else
                             {
                                 printf("\nDigite a id do Produto o qual queira alterar a qtde: ");
-                                //setbuf(stdin,NULL);
                                 scanf("%lu",&idOut);
                                 setbuf(stdin,NULL);
                                 
@@ -165,7 +159,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                                         fread(&p,sizeof(Produto),1,arqProd);
                                     
                                         printf("\nDigite a nova quantidade a ser vendida: ");
-                                        //setbuf(stdin,NULL);
                                         scanf("%d",&auxQTD);
                                         setbuf(stdin,NULL);
 
@@ -220,7 +213,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                                 do
                                 {
                                     printf("\nDeseja Digitar a Data da compra manualmente ou pega-la do sistema?\n\n1->Digitar manualmente\t2->Obter data do sistema\n\nEscolha: ");
-                                    //setbuf(stdin,NULL);
                                     scanf("%d",&dateChoice);
                                     setbuf(stdin,NULL);
 
@@ -228,7 +220,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                                     {
                                     case 1: /* Digitar a data manualmente */
                                         printf("\nDigite uma data válida no formato \"dd/mm/aaaa\": ");
-                                        //setbuf(stdin,NULL);
                                         fgets(NF.dataCompra,sizeof(NF.dataCompra),stdin);
                                         check_newline(NF.dataCompra);
                                         if(verify_date(NF.dataCompra)==0)
@@ -269,7 +260,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
                 }
                 
                 printf("\nDeseja Realizar outra venda? 1->SIM\t2->NÃO");
-                //setbuf(stdin,NULL);
                 scanf("%d",&mudarCliente);
                 setbuf(stdin,NULL);
             } while (mudarCliente!=2);
@@ -279,7 +269,6 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
             printf("\nInformações incorretas!! Operação Cancelada...");
         
         printf("\nDeseja Logar como outro vendedor ou retornar ao menu? 1->Logar novamente\t2->Sair");
-        //setbuf(stdin,NULL);
         scanf("%d", &sair);
         setbuf(stdin,NULL);
     } while (sair!=2);
@@ -291,7 +280,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
     unsigned long id;
     
     printf("\nDigite a ID do FORNECEDOR: ");
-	//setbuf(stdin,NULL);
     scanf("%lu",&id);
     setbuf(stdin,NULL);
                 
@@ -330,7 +318,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                     C = (Carrinho*)realloc(C,(cartPos+1)*sizeof(Carrinho));
                     
                 printf("\nDigite a id do Produto a ser vendido: ");
-                //setbuf(stdin,NULL);
                 scanf("%lu",&C[cartPos].idProduto);
                 setbuf(stdin,NULL);
 
@@ -344,7 +331,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                         fread(&p,sizeof(Produto),1,arqProd);
 
                         printf("\nDigite a quantidade a ser comprado: ");
-                        //setbuf(stdin,NULL);
                         scanf("%d",&C[cartPos].quantidadeVendida);
                         setbuf(stdin,NULL);
 
@@ -370,7 +356,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                 else
                 {
                     printf("\nDigite a id do Produto a ser removido: ");
-                    //setbuf(stdin,NULL);
                     scanf("%lu",&idOut);
                     setbuf(stdin,NULL);
 
@@ -397,7 +382,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                 else
                 {
                     printf("\nDigite a id do Produto o qual queira alterar a qtde: ");
-                    //setbuf(stdin,NULL);
                     scanf("%lu",&idOut);
                     setbuf(stdin,NULL);
                                 
@@ -413,7 +397,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                             fread(&p,sizeof(Produto),1,arqProd);
                                     
                             printf("\nDigite a nova quantidade a ser comprada: ");
-                            //setbuf(stdin,NULL);
                             scanf("%d",&auxQTD);
                             setbuf(stdin,NULL);
 
@@ -460,7 +443,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                     do
                     {
                         printf("\nDeseja Digitar a Data da compra manualmente ou pega-la do sistema?\n\n1->Digitar manualmente\t2->Obter data do sistema\n\nEscolha: ");
-                        //setbuf(stdin,NULL);
                         scanf("%d",&dateChoice);
                         setbuf(stdin,NULL);
 
@@ -468,7 +450,6 @@ void realizar_compra(FILE *arqForn,FILE *arqProd, FILE *arqNC, FILE *arqINC, int
                         {
                         case 1: /* Digitar a data manualmente */
                             printf("\nDigite uma data válida no formato \"dd/mm/aaaa\": ");
-                            //setbuf(stdin,NULL);
                             fgets(NC.dataCompra,sizeof(NC.dataCompra),stdin);
                             check_newline(NC.dataCompra);
                             if(verify_date(NC.dataCompra)==0)

@@ -7,7 +7,6 @@
 #include "produto.h"
 #include "cliente.h"
 #include "vendedor.h"
-//#include "fornecedorFileManip.h"
 
 void relatorio_notaFiscal(FILE *arqNF, FILE *arqINF)
 {

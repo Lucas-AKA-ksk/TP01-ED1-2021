@@ -23,8 +23,7 @@ int main(void){
     open_file(&fp_itemNotaCompra,"record-files/itemCompra.dat");
     open_file(&fp_historicoPreco,"record-files/historicoPreco.dat");
     
-    /* Gets first available ID based on number of entries in the file
-    (won't work if delete function is implemented) */
+    /* Localizar a primeira ID disponível em cada arquivo */
     fseek(fp_cliente,0,SEEK_END);
     last_clnt_id = (ftell(fp_cliente)/sizeof(Cliente))+1;
     fseek(fp_notaFiscal,0,SEEK_END);
@@ -152,7 +151,7 @@ int main(void){
                     case 0:
                         break;
                 
-                    case 1:
+                    case 1: /* Sub-menu de tipos de consulta de Clientes */
                         do
                         {
                             printf("\n\n\tSelecione por qual campo deseja CONSULTAR:");
@@ -165,15 +164,15 @@ int main(void){
                                 break;
                 
                             case 1:
-                                consulta_clnt_CPF(fp_cliente);/* Função de CONSULTA de clientes por CPF aqui */
+                                consulta_clnt_CPF(fp_cliente);
                                 break;
 
                             case 2:
-                                consulta_clnt_ID(fp_cliente);/* Função de CONSULTA de clientes por ID aqui */
+                                consulta_clnt_ID(fp_cliente);
                                 break;
 
                             case 3:
-                                consulta_clnt_INI(fp_cliente);/* Função de CONSULTA de clientes por INICIAIS aqui */
+                                consulta_clnt_INI(fp_cliente);
                                 break;
 
                             default:
@@ -183,7 +182,7 @@ int main(void){
                         } while (subOption2!=0);
                         break;
 
-                    case 2:
+                    case 2: /* Sub-menu de tipos de consulta de Vendedores */
                         do
                         {
                             printf("\n\n\tSelecione por qual campo deseja CONSULTAR:");
@@ -196,15 +195,15 @@ int main(void){
                                 break;
                 
                             case 1:
-                                consulta_vnddr_CPF(fp_vendedor);/* Função de CONSULTA de clientes por CPF aqui */
+                                consulta_vnddr_CPF(fp_vendedor);
                                 break;
 
                             case 2:
-                                consulta_vnddr_ID(fp_vendedor);/* Função de CONSULTA de vendedores por ID aqui */
+                                consulta_vnddr_ID(fp_vendedor);
                                 break;
 
                             case 3:
-                                consulta_vnddr_INI(fp_vendedor);/* Função de CONSULTA de vendedores por INICIAIS aqui */
+                                consulta_vnddr_INI(fp_vendedor);
                                 break;
 
                             default:
@@ -214,7 +213,7 @@ int main(void){
                         } while (subOption2!=0);
                         break;
 
-                    case 3:
+                    case 3: /* Sub-menu de tipos de consulta de Fornecedores */
                         do
                         {
                             printf("\n\n\tSelecione por qual campo deseja CONSULTAR:");
@@ -227,15 +226,15 @@ int main(void){
                                 break;
                 
                             case 1:
-                                consulta_frncdr_CPF(fp_fornecedor);/* Função de CONSULTA de clientes por CPF aqui */
+                                consulta_frncdr_CPF(fp_fornecedor);
                                 break;
 
                             case 2:
-                                consulta_frncdr_ID(fp_fornecedor);/* Função de CONSULTA de vendedores por ID aqui */
+                                consulta_frncdr_ID(fp_fornecedor);
                                 break;
 
                             case 3:
-                                consulta_frncdr_INI(fp_fornecedor);/* Função de CONSULTA de vendedores por INICIAIS aqui */
+                                consulta_frncdr_INI(fp_fornecedor);
                                 break;
 
                             default:
@@ -312,7 +311,7 @@ int main(void){
                 } while (subOption!=0);
                 break;    
 
-            case 6:/* Sub-menu de relatorios */
+            case 6:/* Sub-menu de relatórios */
                 do
                 {
                     printf("\n\n\tDeseja realizar qual operação:");
