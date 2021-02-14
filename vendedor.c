@@ -6,8 +6,8 @@
 
 void cadastro_vendedor(FILE *arq, int *id)
 {
-    char cpf[12];
-    int sair = 1;
+    char cpf[12],email[50];
+    int sair = 1,validEmail;
     Vendedor new;
     
     do{
@@ -27,10 +27,17 @@ void cadastro_vendedor(FILE *arq, int *id)
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
             format_string(new.nome);
-            printf("\nDigite o email do vendedor: ");
-            fgets(new.email, sizeof(new.email),stdin);
-            check_newline(new.email);
-            format_string(new.email);
+            do
+            {
+                printf("\nDigite o email do vendedor: ");
+                fgets(email, sizeof(email),stdin);
+                check_newline(email);
+                format_string(email);
+                validEmail=pesquisa_vnddr_EMAIL(arq,email);
+                if (validEmail!=-1)
+                    printf("\nEmail já cadastrado em outro registro...");
+            } while (validEmail!=-1);
+            strcpy(new.email,email);    
             printf("\nDigite o telefone do vendedor: ");
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
@@ -77,6 +84,21 @@ int pesquisa_vnddr_CPF(FILE *arq,char* cpf)
    	return -1;
 }
 
+int pesquisa_vnddr_EMAIL(FILE *arq,char* email)
+{
+   	Vendedor r;
+   	int posicao=0;
+   	fseek(arq,0,SEEK_SET);
+   	
+   	while(fread(&r,sizeof(Vendedor),1,arq)==1){
+    	if(strcmp(r.email,email)==0)
+            return posicao;
+      	else
+         	posicao++;
+   	}
+   	return -1;
+}
+
 int pesquisa_vnddr_ID(FILE *arq,unsigned long id)
 {
    	Vendedor r;
@@ -93,8 +115,8 @@ int pesquisa_vnddr_ID(FILE *arq,unsigned long id)
 }
 
 void alteracao_vendedor(FILE *arq){
-    char cpf[12];
-    int sair = 1, posicao;
+    char cpf[12], email[50];
+    int sair = 1, posicao, validEmail;
     Vendedor new;
     
     do{
@@ -118,10 +140,17 @@ void alteracao_vendedor(FILE *arq){
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
             format_string(new.nome);
-            printf("\nDigite o email do vendedor: ");
-            fgets(new.email, sizeof(new.email),stdin);
-            check_newline(new.email);
-            format_string(new.email);
+            do
+            {
+                printf("\nDigite o email do vendedor: ");
+                fgets(email, sizeof(email),stdin);
+                check_newline(email);
+                format_string(email);
+                validEmail = pesquisa_vnddr_EMAIL(arq,email);
+                if(validEmail!=-1 && validEmail!=posicao)
+                    printf("\nEmail ja cadastrado em outro registro...");
+            } while (validEmail!=-1 && validEmail!=posicao);
+            strcpy(new.email,email);
             printf("\nDigite o telefone do vendedor: ");
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);

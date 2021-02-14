@@ -119,7 +119,7 @@ int main(void){
                         break;
 
                     case 3:
-                        alteracao_fornecedor(fp_vendedor);
+                        alteracao_fornecedor(fp_fornecedor);
                         break;
 
                     case 4:

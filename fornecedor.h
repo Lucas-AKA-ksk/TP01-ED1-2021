@@ -9,6 +9,8 @@ int pesquisa_frncdr_CNPJ(FILE*,char*);
 
 int pesquisa_frncdr_ID(FILE*,unsigned long);
 
+int pesquisa_frncdr_NOME(FILE*,char*);
+
 void alteracao_fornecedor(FILE*);
 
 void consulta_frncdr_CPF(FILE*);

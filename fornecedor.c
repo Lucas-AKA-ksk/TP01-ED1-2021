@@ -5,8 +5,8 @@
 #include "utility.h"
 
 void cadastro_fornecedor(FILE *arq, int *id){
-    char cnpj[15];
-    int sair = 1;
+    char cnpj[15],nome[100];
+    int sair = 1, validNome;
     Fornecedor new;
     
     do{
@@ -18,10 +18,17 @@ void cadastro_fornecedor(FILE *arq, int *id){
 
         if(pesquisa_frncdr_CNPJ(arq,cnpj)==-1){
             strcpy(new.cnpj, cnpj);
-            printf("\nDigite o nome do fornecedor: ");
-            fgets(new.nome, sizeof(new.nome),stdin);
-            check_newline(new.nome);
-            format_string(new.nome);
+            do
+            {
+                printf("\nDigite o nome do Fornecedor: ");
+                fgets(nome, sizeof(nome),stdin);
+                check_newline(nome);
+                format_string(nome);
+                validNome=pesquisa_frncdr_NOME(arq,nome);
+                if(validNome!=-1)
+                    printf("\nNome já cadastrado em outro registro...");
+            } while (validNome!=-1);
+            strcpy(new.nome,nome);
             printf("\nDigite o email do fornecedor: ");
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
@@ -66,6 +73,20 @@ int pesquisa_frncdr_CNPJ(FILE *arq,char* cnpj){
    	return -1;
 }
 
+int pesquisa_frncdr_NOME(FILE *arq,char* nome){
+    Fornecedor r;
+   	int posicao=0;
+   	fseek(arq,0,SEEK_SET);
+   	
+   	while(fread(&r,sizeof(Fornecedor),1,arq)==1){
+    	if(strcmp(r.nome,nome)==0)
+        	return posicao;
+      	else
+         	posicao++;
+   	}
+   	return -1;
+}
+
 int pesquisa_frncdr_ID(FILE *arq,unsigned long id){
    	Fornecedor r;
    	int posicao=0;
@@ -81,8 +102,8 @@ int pesquisa_frncdr_ID(FILE *arq,unsigned long id){
 }
 
 void alteracao_fornecedor(FILE *arq){
-    char cnpj[15];
-    int sair = 1, posicao;
+    char cnpj[15],nome[100];
+    int sair = 1, posicao, validNome;
     Fornecedor new;
     
     do{
@@ -98,10 +119,17 @@ void alteracao_fornecedor(FILE *arq){
             fseek(arq,posicao*sizeof(Fornecedor),SEEK_SET);
             fread(&new,sizeof(Fornecedor),1,arq);
             strcpy(new.cnpj, cnpj);
-            printf("\nDigite o nome do fornecedor: ");
-            fgets(new.nome, sizeof(new.nome),stdin);
-            check_newline(new.nome);
-            format_string(new.nome);
+            do
+            {
+                printf("\nDigite o nome do Fornecedor: ");
+                fgets(nome, sizeof(nome),stdin);
+                check_newline(nome);
+                format_string(nome);
+                validNome=pesquisa_frncdr_NOME(arq,nome);
+                if(validNome!=-1 && validNome!=posicao)
+                    printf("\nNome já cadastrado em outro registro...");
+            } while (validNome!=-1 && validNome!=posicao);
+            strcpy(new.nome,nome);
             printf("\nDigite o email do fornecedor: ");
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
