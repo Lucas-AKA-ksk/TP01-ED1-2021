@@ -514,10 +514,8 @@ void melhor_vnddr_mes(FILE *arqVnddr,FILE *arqNF,FILE *arqINF)
 {
     FILE *fp_relatorio;
     NotaFiscal NF;
-    ItemNotaFiscal INF;
     Vendedor V;
     int sair, escolha, posicaoV;
-    unsigned long id;
     char dataInicial[11],dataFinal[11];
     char monYear[8];
     float maiorValor;
@@ -616,10 +614,8 @@ void melhor_vnddr_intrvl(FILE *arqVnddr,FILE *arqNF,FILE *arqINF)
 {
     FILE *fp_relatorio;
     NotaFiscal NF;
-    ItemNotaFiscal INF;
     Vendedor V;
     int sair, escolha, posicaoV;
-    unsigned long id;
     char dataInicial[11],dataFinal[11];
     float maiorValor;
     do
