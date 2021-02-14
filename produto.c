@@ -14,6 +14,7 @@ void cadastro_produto(FILE* arq, int *id)
         printf("\nDigite o nome do Produto que será cadastrado: ");
         fgets(new.nome,sizeof(new.nome),stdin);
         check_newline(new.nome);
+        format_string(new.nome); //teste
         printf("\nDigite o Preco da unidade: ");
         scanf("%f",&new.precoUnitario);
         setbuf(stdin,NULL);

@@ -26,6 +26,7 @@ void realizar_venda(FILE *arqVnddr,FILE *arqClnt,FILE *arqProd, FILE *arqNF, FIL
 		setbuf(stdin,NULL);
         fgets(password,sizeof(password),stdin);
         check_newline(password);
+        format_string(password);
         
         posicaoV = login_vendedor(arqVnddr,cpf,password);
     

@@ -158,6 +158,7 @@ int main(void){
                             printf("\n\t1->Consulta por CPF\n\t2->Consulta por ID\n\t3->Consulta por INICIAIS\n\t0->Voltar ao Menu de Consultas");
                             printf("\n\nOpção selecionada: ");
                             scanf("%d", &subOption2);
+                            setbuf(stdin,NULL);
                             switch (subOption2)
                             {
                             case 0:
@@ -189,6 +190,7 @@ int main(void){
                             printf("\n\t1->Consulta por CPF\n\t2->Consulta por ID\n\t3->Consulta por INICIAIS\n\t0->Voltar ao Menu de Consultas");
                             printf("\n\nOpção selecionada: ");
                             scanf("%d", &subOption2);
+                            setbuf(stdin,NULL);
                             switch (subOption2)
                             {
                             case 0:
@@ -220,6 +222,7 @@ int main(void){
                             printf("\n\t1->Consulta por CNPJ\n\t2->Consulta por ID\n\t3->Consulta por INICIAIS\n\t0->Voltar ao Menu de Consultas");
                             printf("\n\nOpção selecionada: ");
                             scanf("%d", &subOption2);
+                            setbuf(stdin,NULL);
                             switch (subOption2)
                             {
                             case 0:

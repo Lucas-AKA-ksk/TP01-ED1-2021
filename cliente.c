@@ -21,9 +21,11 @@ void cadastro_cliente(FILE *arq, int *id){
             printf("\nDigite o nome do cliente: ");
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
+            format_string(new.nome);
             printf("\nDigite o email do cliente: ");
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
+            format_string(new.email);
             printf("\nDigite o telefone do cliente: ");
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
@@ -99,9 +101,11 @@ void alteracao_cliente(FILE *arq){
             printf("\nDigite o nome do cliente: ");
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
+            format_string(new.nome);
             printf("\nDigite o email do cliente: ");
             fgets(new.email, sizeof(new.email),stdin);
             check_newline(new.email);
+            format_string(new.email);
             printf("\nDigite o telefone do cliente: ");
             fgets(new.telefone, sizeof(new.telefone),stdin);
             check_newline(new.telefone);
@@ -194,6 +198,7 @@ void consulta_clnt_INI(FILE *arq){
         printf("\nDigite as 3 primeiras letras do nome do cliente \no qual deseja CONSULTAR : ");
         fgets(ini,sizeof(ini),stdin);
         check_newline(ini);
+        format_string(ini);
         
         count = 0;
         fseek(arq,0,SEEK_SET);
