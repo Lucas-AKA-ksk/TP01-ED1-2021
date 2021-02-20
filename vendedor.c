@@ -19,10 +19,10 @@ void cadastro_vendedor(FILE *arq, int *id)
 
         if(pesquisa_vnddr_CPF(arq,cpf)==-1){
             strcpy(new.cpf, cpf);
-            printf("\nDigite a matricula do vendedor: ");
+            /*printf("\nDigite a matricula do vendedor: ");
             fgets(new.matricula, sizeof(new.matricula),stdin);
             check_newline(new.matricula);
-            format_string(new.matricula);
+            format_string(new.matricula);*/
             printf("\nDigite o nome do vendedor: ");
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
@@ -66,7 +66,7 @@ void listar_vendedores(FILE *arq)
     printf("\nListagem de Vendedores");
     printf("\nID\t\tMATRICULA\t\tNOME\t\t\t\tCPF\t\tEMAIL\t\t\tTELEFONE\t\t\tSENHA:");
     while(fread(&r,sizeof(Vendedor),1,arq))
-        printf("\n%lu\t\t%s\t\t%s\t\t\t\t%s\t\t%s\t\t\t%s\t\t\t%s",r.id,r.matricula,r.nome,r.cpf,r.email,r.telefone,r.password);
+        printf("\n%lu\t\t%s\t\t\t\t%s\t\t%s\t\t\t%s\t\t\t%s",r.id,/*r.matricula,*/r.nome,r.cpf,r.email,r.telefone,r.password);
 }
 
 int pesquisa_vnddr_CPF(FILE *arq,char* cpf)
@@ -132,10 +132,10 @@ void alteracao_vendedor(FILE *arq){
             fseek(arq,posicao*sizeof(Vendedor),SEEK_SET);
             fread(&new,sizeof(Vendedor),1,arq);
             strcpy(new.cpf, cpf);
-            printf("\nDigite a matricula do vendedor: ");
+            /*printf("\nDigite a matricula do vendedor: ");
             fgets(new.matricula, sizeof(new.matricula),stdin);
             check_newline(new.matricula);
-            format_string(new.matricula);
+            format_string(new.matricula);*/
             printf("\nDigite o nome do vendedor: ");
             fgets(new.nome, sizeof(new.nome),stdin);
             check_newline(new.nome);
@@ -192,7 +192,7 @@ void consulta_vnddr_CPF(FILE *arq){
             fread(&search,sizeof(Vendedor),1,arq);
             
 			printf("\nCPF do Vendedor: %s",search.cpf); 
-            printf("\nMatricula do Vendedor: %s",search.matricula); 
+            /*printf("\nMatricula do Vendedor: %s",search.matricula); */
 			printf("\nNome do Vendedor: %s",search.nome); 
 			printf("\nEMAIL do Vendedor: %s",search.email); 
 			printf("\nTelefone do Vendedor: %s",search.telefone); 
@@ -226,7 +226,7 @@ void consulta_vnddr_ID(FILE *arq){
             fread(&search,sizeof(Vendedor),1,arq);
             
 			printf("\nCPF do Vendedor: %s",search.cpf); 
-            printf("\nMatricula do Vendedor: %s",search.matricula); 
+            /*printf("\nMatricula do Vendedor: %s",search.matricula);*/
 			printf("\nNome do Vendedor: %s",search.nome); 
 			printf("\nEMAIL do Vendedor: %s",search.email); 
 			printf("\nTelefone do Vendedor: %s",search.telefone); 
@@ -265,7 +265,7 @@ void consulta_vnddr_INI(FILE *arq){
                 printf("\nCPF do Vendedor: %s",search.cpf); 
 			    printf("\nEMAIL do Vendedor: %s",search.email); 
 			    printf("\nTelefone do Vendedor: %s",search.telefone);
-                printf("\nMatricula do Vendedor: %s",search.matricula);  
+                /*printf("\nMatricula do Vendedor: %s",search.matricula); */ 
 			    printf("\nID do Vendedor: %lu",search.id);
                 printf("\nSenha do Vendedor: %s",search.password); 
                 count++;

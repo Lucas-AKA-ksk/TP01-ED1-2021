@@ -39,7 +39,7 @@ typedef struct
 typedef struct
 {
     unsigned long id;
-    char matricula[10];
+    /*char matricula[10];*/
     char nome[100];
     char cpf[12];
     char email[50];
